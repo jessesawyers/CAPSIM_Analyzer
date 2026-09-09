@@ -1,0 +1,29 @@
+# Python / uv Virtual Enviornments
+.venv/
+venv/
+ENV/
+env/
+
+# Python artifacts and background caches (NO __pycache__/)
+*.py[cod]
+*$py.class
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+
+# Project specific financial data inputs data/ (Courier PDF)
+*.pdf
+
+#Enviornment variables & private secrets
+.env
+.env.local
+*.secrets
+
+# VS Code editor settings
+.vscode/
+!.vscode/extensions.json
+
+# Windows system clutter
+Thumbs.db
+ehthumbs.db
+Desktop.ini
