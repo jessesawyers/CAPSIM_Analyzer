@@ -121,7 +121,8 @@ class ProductionMetrics:
     units_sold_as_capacity_percent: Decimal | None
     capacity_headroom: int | None
     second_shift_percent: Decimal | None
-    overtime: bool | None
+    # Courier's combined "2nd Shift & Overtime" percentage.
+    overtime: Decimal | None
     inventory_to_sales_ratio: Decimal | None
 
 

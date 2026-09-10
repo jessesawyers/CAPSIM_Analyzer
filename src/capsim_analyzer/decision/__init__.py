@@ -1,0 +1,67 @@
+"""Core decision-engine types and context."""
+
+from .context import DecisionContext
+from .marketing_rules import (
+    evaluate_customer_survey_score,
+    evaluate_marketing_evidence_completeness,
+    evaluate_marketing_market_share_gap,
+    evaluate_marketing_market_share_history,
+    evaluate_promotion_awareness,
+    evaluate_sales_budget_accessibility,
+)
+from .production_rules import (
+    evaluate_forecast_inventory_vs_desired,
+    evaluate_forecast_sales_vs_capacity,
+    evaluate_forecast_sales_vs_current,
+    evaluate_inventory_stockout,
+    evaluate_required_production_vs_capacity,
+    evaluate_utilization_indicators,
+)
+from .types import (
+    ActualPotentialComparison,
+    CapacityPosition,
+    ComparisonDirection,
+    DecisionReport,
+    DecisionStatus,
+    Evidence,
+    ExpectedValueComparison,
+    ForecastCapacityComparison,
+    ForecastCurrentComparison,
+    RangeComparison,
+    RangePosition,
+    Recommendation,
+    RecommendationCategory,
+    RecommendationPriority,
+    RuleResult,
+)
+
+__all__ = [
+    "DecisionContext",
+    "evaluate_customer_survey_score",
+    "evaluate_marketing_evidence_completeness",
+    "evaluate_marketing_market_share_gap",
+    "evaluate_marketing_market_share_history",
+    "evaluate_promotion_awareness",
+    "evaluate_sales_budget_accessibility",
+    "evaluate_forecast_inventory_vs_desired",
+    "evaluate_forecast_sales_vs_capacity",
+    "evaluate_forecast_sales_vs_current",
+    "evaluate_inventory_stockout",
+    "evaluate_required_production_vs_capacity",
+    "evaluate_utilization_indicators",
+    "ActualPotentialComparison",
+    "CapacityPosition",
+    "ComparisonDirection",
+    "DecisionReport",
+    "DecisionStatus",
+    "Evidence",
+    "ExpectedValueComparison",
+    "ForecastCapacityComparison",
+    "ForecastCurrentComparison",
+    "Recommendation",
+    "RecommendationCategory",
+    "RecommendationPriority",
+    "RangeComparison",
+    "RangePosition",
+    "RuleResult",
+]
