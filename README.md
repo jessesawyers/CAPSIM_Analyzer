@@ -1,6 +1,6 @@
 # CAPSIM Analyzer
 
-WIP -- Version 1 defines the local, validated data foundation for CAPSIM Courier reports.
+Version 1 defines the local, validated data foundation for CAPSIM Courier reports.
 
 The eventual workflow is:
 
