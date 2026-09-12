@@ -66,6 +66,15 @@ def get_product(report, product_name):
     return None
 
 
+def get_segment_product_snapshot(report, product_name):
+    """Find the segment-analysis snapshot for a product by name."""
+    for segment_report in report.segment_reports:
+        for snapshot in segment_report.products:
+            if snapshot.product_name == product_name:
+                return snapshot
+    return None
+
+
 def get_product_observations(product, product_forecast):
     observations = []
 
@@ -129,6 +138,111 @@ def get_product_observations(product, product_forecast):
                     "Forecast demand is decreasing.",
                     f"Forecast sales are {number(forecast)} units, "
                     f"{change:+.1f}% versus current sales."
+                )
+            )
+
+    return observations
+
+
+def get_marketing_observations(marketing_snapshot):
+    """
+    Identify conservative marketing-related review opportunities.
+
+    These are review triggers, not guaranteed recommendations.
+    They rely on marketing fields extracted from the Courier report.
+    """
+    observations = []
+
+    if marketing_snapshot is None:
+        return observations
+
+    awareness = getattr(
+        marketing_snapshot,
+        "customer_awareness_percent",
+        None,
+    )
+
+    accessibility = getattr(
+        marketing_snapshot,
+        "customer_accessibility_percent",
+        None,
+    )
+
+    survey_score = getattr(
+        marketing_snapshot,
+        "customer_survey_score",
+        None,
+    )
+
+    # Low awareness may indicate a promotion opportunity.
+    if awareness is not None:
+        awareness_value = Decimal(str(awareness))
+
+        if awareness_value < Decimal("40"):
+            observations.append(
+                (
+                    "MARKETING",
+                    "Review promotion spending.",
+                    (
+                        f"Awareness is currently {awareness_value:.1f}%, "
+                        "which may limit customer demand."
+                    ),
+                )
+            )
+
+    # Low accessibility may indicate a sales-budget/distribution issue.
+    if accessibility is not None:
+        accessibility_value = Decimal(str(accessibility))
+
+        if accessibility_value < Decimal("40"):
+            observations.append(
+                (
+                    "MARKETING",
+                    "Review sales budget and accessibility.",
+                    (
+                        f"Accessibility is currently "
+                        f"{accessibility_value:.1f}%, which may limit "
+                        "product availability to customers."
+                    ),
+                )
+            )
+
+    # Very low survey scores may indicate poor product appeal,
+    # positioning, or customer-perceived fit.
+    if survey_score is not None:
+        survey_value = Decimal(str(survey_score))
+
+        if survey_value <= Decimal("5"):
+            observations.append(
+                (
+                    "MARKETING",
+                    "Review customer-perceived product fit.",
+                    (
+                        f"The customer survey score is "
+                        f"{survey_value:.0f}, which may indicate weak "
+                        "product appeal or positioning."
+                    ),
+                )
+            )
+
+    # If both awareness and accessibility are strong,
+    # avoid automatically recommending more marketing.
+    if awareness is not None and accessibility is not None:
+        awareness_value = Decimal(str(awareness))
+        accessibility_value = Decimal(str(accessibility))
+
+        if (
+            awareness_value >= Decimal("60")
+            and accessibility_value >= Decimal("60")
+        ):
+            observations.append(
+                (
+                    "MARKETING",
+                    "Marketing reach appears reasonably strong.",
+                    (
+                        "Awareness and accessibility are both at "
+                        "relatively healthy levels."
+                    ),
                 )
             )
 
@@ -207,6 +321,7 @@ def print_focus_product(
     product_forecast,
     recommendations,
     market_share_analysis,
+    marketing_snapshot=None,
 ):
     """Print a concise but useful summary for one focus product."""
 
@@ -287,6 +402,32 @@ def print_focus_product(
     print(f"Utilization:          {percent(product.plant_utilization_percent)}")
     print(f"Automation:           {product.automation_level}")
 
+
+    print("\nMARKETING")
+    print("-" * 40)
+
+    print(
+        f"Promotion budget:     "
+        f"{money(getattr(marketing_snapshot, 'promotion_budget', None))}"
+    )
+    print(
+        f"Sales budget:         "
+        f"{money(getattr(marketing_snapshot, 'sales_budget', None))}"
+    )
+    print(
+        f"Awareness:            "
+        f"{percent(getattr(marketing_snapshot, 'customer_awareness_percent', None))}"
+    )
+    print(
+        f"Accessibility:        "
+        f"{percent(getattr(marketing_snapshot, 'customer_accessibility_percent', None))}"
+    )
+    print(
+        f"Survey score:         "
+        f"{number(getattr(marketing_snapshot, 'customer_survey_score', None))}"
+    )
+
+
     observations = get_product_observations(
         product,
         product_forecast,
@@ -306,10 +447,23 @@ def print_focus_product(
             print(f"{symbol} {title}")
             print(f"  {explanation}")
 
+    marketing_observations = get_marketing_observations(
+        marketing_snapshot,
+    )
+
+    if marketing_observations:
+        print("\nMARKETING OBSERVATIONS")
+        print("-" * 40)
+
+        for _, title, explanation in marketing_observations:
+            print(f"⚠ {title}")
+            print(f"  {explanation}")
+
     # Build practical decision-focus items from the product's
     # most relevant observations and recommendations.
     decision_focus = []
 
+    
     if product.plant_utilization_percent is not None:
         utilization = Decimal(str(product.plant_utilization_percent))
 
@@ -358,6 +512,32 @@ def print_focus_product(
                     "current sales."
                 )
             )
+
+    # Add marketing-related review items before engine recommendations.
+    for category, title, explanation in marketing_observations:
+        item = (title, explanation)
+
+        if item in decision_focus:
+            continue
+
+        decision_focus.append(item)
+
+        if len(decision_focus) >= 3:
+            break
+
+
+    if len(decision_focus) < 3:
+        for _, title, explanation in marketing_observations:
+            item = (title, explanation)
+
+            if item in decision_focus:
+                continue
+
+            decision_focus.append(item)
+
+            if len(decision_focus) >= 3:
+                break
+
 
     # Add an engine recommendation if there is still room for another
     # useful decision item.
@@ -538,11 +718,15 @@ def main():
             continue
 
         print_focus_product(
-            product=product,
-            product_forecast=product_forecasts.get(product_name),
-            recommendations=recommendations_by_product[product_name],
-            market_share_analysis=market_share_analysis,
-        )
+    product=product,
+    product_forecast=product_forecasts.get(product_name),
+    recommendations=recommendations_by_product[product_name],
+    market_share_analysis=market_share_analysis,
+    marketing_snapshot=get_segment_product_snapshot(
+        report,
+        product_name,
+    ),
+)
 
     # ---------------------------------------------------------
     # FINANCIAL SNAPSHOT
