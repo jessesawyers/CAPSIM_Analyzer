@@ -21,8 +21,8 @@ from capsim_analyzer.decision.context import DecisionContext
 from capsim_analyzer.decision.engine import evaluate_decisions
 
 
-# Products we want to focus on in the user-facing report.
-FOCUS_PRODUCTS = {"Bead", "Baker", "Bid", "Bold", "Buddy"}
+# Company whose products should be highlighted in the user-facing report.
+FOCUS_COMPANY = Company.BALDWIN
 
 
 def money(value):
@@ -56,6 +56,20 @@ def percent(value):
         return f"{Decimal(str(value)):.1f}%"
     except Exception:
         return str(value)
+
+
+def get_focus_products(report):
+    """
+    Return the currently active products belonging to the focus company.
+
+    Product membership is determined from the Courier report rather than
+    from hardcoded product names, allowing products to be added or removed.
+    """
+    return [
+        product
+        for product in report.products
+        if getattr(product, "company", None) == FOCUS_COMPANY
+    ]
 
 
 def get_product(report, product_name):
@@ -249,7 +263,7 @@ def get_marketing_observations(marketing_snapshot):
     return observations
 
 
-def get_recommendation_product_name(recommendation):
+def get_recommendation_product_name(recommendation, focus_product_names):
     """
     Try to identify the product associated with a recommendation.
 
@@ -259,7 +273,7 @@ def get_recommendation_product_name(recommendation):
     entity_id = getattr(recommendation, "entity_id", None)
 
     if entity_id:
-        for product_name in FOCUS_PRODUCTS:
+        for product_name in focus_product_names:
             if product_name.lower() in str(entity_id).lower():
                 return product_name
 
@@ -270,7 +284,7 @@ def get_recommendation_product_name(recommendation):
         ]
     ).lower()
 
-    for product_name in FOCUS_PRODUCTS:
+    for product_name in focus_product_names:
         if product_name.lower() in text:
             return product_name
 
@@ -615,7 +629,7 @@ def print_all_market_share(report, market_share_analysis):
 def main():
     if len(sys.argv) != 2:
         print("Usage:")
-        print("  python main.py data/CourierC165051R0TBK0CA.PDF")
+        print("  python main.py data/Week_0.PDF")
         return
 
     pdf_path = Path(sys.argv[1])
@@ -630,6 +644,8 @@ def main():
 
     print("\nReading Courier report...")
     report = parse_courier_pdf(pdf_path)
+    focus_products = get_focus_products(report)
+    focus_product_names = [product.name for product in focus_products]
 
     print(f"Company reports loaded: {len(report.companies)}")
     print(f"Products analyzed:      {len(report.products)}")
@@ -692,30 +708,27 @@ def main():
     print("=" * 60)
 
     print(
-        "\nThe analyzer calculates all products, but the decision report "
-        "focuses on Bead, Baker, Bid, Bold, and Buddy."
+    "\nThe analyzer calculates all products, but the decision report "
+    f"focuses on the currently active {FOCUS_COMPANY.value} products."
     )
 
     recommendations_by_product = {
         product_name: []
-        for product_name in FOCUS_PRODUCTS
+        for product_name in focus_product_names
     }
 
     for recommendation in decision_report.recommendations:
-        product_name = get_recommendation_product_name(recommendation)
+        product_name = get_recommendation_product_name(
+            recommendation,
+            focus_product_names,
+        )
 
         if product_name in recommendations_by_product:
             recommendations_by_product[product_name].append(recommendation)
 
-    # Keep the user's requested order.
-    for product_name in ["Bead", "Baker", "Bid", "Bold", "Buddy"]:
+    for product in focus_products:
+        product_name = product.name
         product = get_product(report, product_name)
-
-        if product is None:
-            print(f"\n{product_name.upper()}")
-            print("-" * 40)
-            print("Product was not found in this Courier report.")
-            continue
 
         print_focus_product(
     product=product,
@@ -780,20 +793,20 @@ def main():
 
     displayed_recommendations = 0
 
-    for product_name in ["Bead", "Baker", "Bid", "Bold", "Buddy"]:
+    for product_name in focus_product_names:
         displayed_recommendations += min(
         len(recommendations_by_product[product_name]),
         3,
     )
 
     print(f"Products analyzed:       {len(report.products)}")
-    print(f"Focus products:           {len(FOCUS_PRODUCTS)}")
+    print(f"Focus products:           {len(focus_product_names)}")
     print(f"Recommendations reviewed: {displayed_recommendations}")
 
     print(
     "\nThe analyzer evaluates all products and market data, "
-    "then highlights the five selected focus products for "
-    "decision-making."
+    f"then highlights the {len(focus_product_names)} currently active "
+    f"{FOCUS_COMPANY.value} products for decision-making."
 )
 
     print(
