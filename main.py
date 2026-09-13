@@ -434,12 +434,154 @@ def get_production_capacity_analysis(product, product_forecast):
     return observations
 
 
+TOTAL_SIMULATION_ROUNDS = 6
+AUTOMATION_COST_PER_CAPACITY = Decimal("4")
+LABOR_SAVINGS_PER_AUTOMATION_POINT = Decimal("0.10")
+
+
+def get_production_automation_analysis(
+    product,
+    product_forecast,
+    current_round,
+):
+    """
+    Evaluate whether automation deserves attention for the product.
+
+    CAPSIM automation rules:
+    - Automation ranges from 1.0 to 10.0.
+    - Each additional automation point reduces labor cost by
+      approximately 10%.
+    - Each automation point costs $4 per unit of capacity.
+    - Automation changes take a full year to take effect.
+
+    ROI is estimated using:
+        (labor savings * remaining rounds) / automation cost
+
+    These are review triggers, not guaranteed decisions.
+    """
+
+    automation = product.automation_level
+    labor_cost = product.labor_cost
+    capacity = product.capacity_next_round
+
+    forecast_demand = None
+    if product_forecast is not None:
+        forecast_demand = product_forecast.value
+
+    observations = []
+
+    if automation is None or labor_cost is None or capacity is None:
+        return [
+            "Automation analysis cannot be completed from the available data."
+        ]
+
+    if automation >= Decimal("10"):
+        return [
+            "Automation is already at the maximum level; no further increase is available."
+        ]
+
+    if forecast_demand is None:
+        forecast_demand = product.units_sold
+
+    if forecast_demand is None:
+        return [
+            "Automation priority cannot be determined without a production-volume estimate."
+        ]
+
+    automation = Decimal(str(automation))
+    labor_cost = Decimal(str(labor_cost))
+    capacity = Decimal(str(capacity))
+    forecast_demand = Decimal(str(forecast_demand))
+
+    remaining_rounds = max(
+        0,
+        TOTAL_SIMULATION_ROUNDS - current_round,
+    )
+
+    # CAPSIM charges $4 per unit of capacity for each
+    # additional automation point.
+    automation_cost = (
+        capacity * AUTOMATION_COST_PER_CAPACITY
+    )
+
+    # CAPSIM estimates approximately 10% labor-cost savings
+    # for each additional automation point.
+    annual_labor_savings = (
+        forecast_demand
+        * labor_cost
+        * LABOR_SAVINGS_PER_AUTOMATION_POINT
+    )
+
+    total_labor_savings = (
+        annual_labor_savings
+        * Decimal(str(remaining_rounds))
+    )
+
+    roi = None
+    if automation_cost > 0:
+        roi = (
+            total_labor_savings
+            / automation_cost
+        ) * Decimal("100")
+
+    # High production volume and meaningful labor cost make
+    # automation more worthy of consideration.
+    if forecast_demand >= Decimal("1000") and labor_cost >= Decimal("7"):
+        observations.append(
+            "Automation is worth evaluating due to high production volume and labor cost."
+        )
+
+        observations.append(
+            f"A 1-level increase would cost approximately "
+            f"${number(automation_cost)}."
+        )
+
+    elif forecast_demand >= Decimal("500") and labor_cost >= Decimal("8"):
+        observations.append(
+            "Automation may be worth evaluating due to production volume and labor cost."
+        )
+
+        observations.append(
+            f"A 1-level increase would cost approximately "
+            f"${number(automation_cost)}."
+        )
+
+    else:
+        observations.append(
+            "Automation is currently a low priority due to relatively low production volume."
+        )
+
+    # ROI is only meaningful when there are rounds remaining.
+    if roi is not None and remaining_rounds > 0:
+        observations.append(
+            f"Estimated {remaining_rounds}-round labor savings are "
+            f"approximately ${number(total_labor_savings)} "
+            f"({roi:.1f}% ROI)."
+        )
+
+    # Capacity problems should take priority because automation
+    # reduces labor cost but does not increase production capacity.
+    if forecast_demand > capacity:
+        observations.append(
+            "Capacity pressure should be addressed first; automation does not increase capacity."
+        )
+
+    # High automation can make R&D repositioning more difficult.
+    if automation >= Decimal("7"):
+        observations.append(
+            "Current automation is relatively high; consider the potential impact on future R&D repositioning."
+        )
+
+    return observations[:3]
+
+
 def print_focus_product(
     product,
     product_forecast,
     recommendations,
     market_share_analysis,
     marketing_snapshot=None,
+    current_round=0,
 ):
     """Print a concise but useful summary for one focus product."""
 
@@ -532,6 +674,18 @@ def print_focus_product(
     print("-" * 40)
 
     for observation in production_observations:
+        print(f"- {observation}")
+
+
+    automation_observations = get_production_automation_analysis(
+        product,
+        product_forecast,
+        current_round,
+    )
+
+    print("\nPRODUCTION AUTOMATION ANALYSIS")
+    print("-" * 40)
+    for observation in automation_observations:
         print(f"- {observation}")
 
     
@@ -850,15 +1004,16 @@ def main():
         product = get_product(report, product_name)
 
         print_focus_product(
-        product=product,
-        product_forecast=product_forecasts.get(product_name),
-        recommendations=recommendations_by_product[product_name],
-        market_share_analysis=market_share_analysis,
-        marketing_snapshot=get_segment_product_snapshot(
-        report,
-        product_name,
-    ),
-)
+            product=product,
+            product_forecast=product_forecasts.get(product_name),
+            recommendations=recommendations_by_product[product_name],
+            market_share_analysis=market_share_analysis,
+            marketing_snapshot=get_segment_product_snapshot(
+                report,
+                product_name,
+            ),
+            current_round=report.round_number,
+        )
 
     # ---------------------------------------------------------
     # FINANCIAL SNAPSHOT
