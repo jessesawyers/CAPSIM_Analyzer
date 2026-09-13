@@ -333,11 +333,13 @@ def recommendation_topic(recommendation):
 
 def get_production_capacity_analysis(product, product_forecast):
     """
-    Explain whether the product's main production concern is:
-    - insufficient capacity,
+    Evaluate production capacity, utilization, and automation/labor conditions.
+
+    This function intentionally separates:
+    - physical capacity problems,
     - high utilization,
-    - labor-cost/automation opportunity,
-    - or no major production concern.
+    - automation/labor-cost opportunities,
+    - and normal production conditions.
     """
 
     capacity = product.capacity_next_round
@@ -352,59 +354,77 @@ def get_production_capacity_analysis(product, product_forecast):
 
     observations = []
 
-    # Capacity versus forecast demand
-    if forecast_demand is not None:
+    # ---------------------------------------------------------
+    # 1. Capacity compared with forecast demand
+    # ---------------------------------------------------------
+
+    if forecast_demand is not None and capacity is not None:
         capacity_gap = capacity - forecast_demand
 
         if capacity_gap < 0:
             observations.append(
-                f"Capacity shortage: forecast demand exceeds capacity by "
-                f"{number(abs(capacity_gap))} units."
+                f"Capacity shortage: forecast demand exceeds listed capacity "
+                f"by {number(abs(capacity_gap))} units."
             )
+
         elif capacity_gap <= max(100, capacity * 0.10):
             observations.append(
-                f"Limited capacity headroom: only "
-                f"{number(capacity_gap)} units above forecast demand."
+                f"Limited capacity headroom: forecast demand is only "
+                f"{number(capacity_gap)} units below listed capacity."
             )
+
         else:
             observations.append(
-                f"Capacity appears sufficient with approximately "
-                f"{number(capacity_gap)} units of headroom."
+                f"Forecast demand is approximately "
+                f"{number(capacity_gap)} units below listed capacity."
             )
 
-    # Utilization interpretation
-    if utilization >= 120:
-        observations.append(
-            "Utilization is critically high. Production capacity is under "
-            "significant pressure."
-        )
-    elif utilization >= 90:
-        observations.append(
-            "Utilization is high. Monitor production pressure and capacity needs."
-        )
-    elif utilization <= 50:
-        observations.append(
-            "Utilization is relatively low; immediate capacity expansion "
-            "does not appear necessary."
-        )
+    # ---------------------------------------------------------
+    # 2. Utilization interpretation
+    # ---------------------------------------------------------
 
-    # Automation and labor-cost interpretation
-    if automation <= 4 and labor_cost >= 8:
-        observations.append(
-            "Automation/labor opportunity: automation is relatively low and "
-            "labor cost is relatively high. Increasing automation may reduce "
-            "future labor costs, but does not directly increase capacity."
-        )
-    elif automation <= 4 and labor_cost >= 7:
-        observations.append(
-            "Labor-cost opportunity: consider automation as a longer-term "
-            "cost-reduction decision."
-        )
-    elif automation >= 7:
-        observations.append(
-            "Automation is already relatively high; additional automation "
-            "may provide diminishing labor-cost benefits."
-        )
+    if utilization is not None:
+        if utilization >= 120:
+            observations.append(
+                "Utilization is critically high. Production capacity is under "
+                "significant pressure."
+            )
+
+        elif utilization >= 90:
+            observations.append(
+                "Utilization is high. Monitor production pressure and future "
+                "capacity requirements."
+            )
+
+        elif utilization <= 50:
+            observations.append(
+                "Current utilization is relatively low; immediate capacity "
+                "expansion does not appear necessary."
+            )
+
+    # ---------------------------------------------------------
+    # 3. Automation and labor-cost interpretation
+    # ---------------------------------------------------------
+    #
+    # Automation is treated as a long-term labor-cost decision,
+    # NOT as a solution to a physical capacity shortage.
+    #
+    # The tighter threshold avoids flagging every product with
+    # moderately low automation.
+    # ---------------------------------------------------------
+
+    if automation is not None and labor_cost is not None:
+
+        if automation <= 3 and labor_cost >= 9:
+            observations.append(
+                "Automation/labor opportunity: automation is relatively low "
+                "while labor cost is high. Increasing automation may improve "
+                "future margins, but does not directly increase production capacity."
+            )
+
+    # ---------------------------------------------------------
+    # 4. Fallback if no meaningful concern was detected
+    # ---------------------------------------------------------
 
     if not observations:
         observations.append(
@@ -503,6 +523,18 @@ def print_focus_product(
     print(f"Automation:           {product.automation_level}")
 
 
+    production_observations = get_production_capacity_analysis(
+        product,
+        product_forecast,
+    )
+
+    print("\nPRODUCTION CAPACITY ANALYSIS")
+    print("-" * 40)
+
+    for observation in production_observations:
+        print(f"- {observation}")
+
+    
     print("\nMARKETING")
     print("-" * 40)
 
@@ -547,17 +579,7 @@ def print_focus_product(
             print(f"{symbol} {title}")
             print(f"  {explanation}")
 
-    production_observations = get_production_capacity_analysis(
-        product,
-        product_forecast,
-    )
-
-    print("\nPRODUCTION CAPACITY ANALYSIS")
-    print("-" * 40)
-
-    for observation in production_observations:
-        print(f"- {observation}")
-
+    
     marketing_observations = get_marketing_observations(
         marketing_snapshot,
     )
