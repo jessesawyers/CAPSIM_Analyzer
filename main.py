@@ -1,3 +1,4 @@
+from itertools import product
 import sys
 from pathlib import Path
 from decimal import Decimal
@@ -330,6 +331,89 @@ def recommendation_topic(recommendation):
     return "OTHER"
 
 
+def get_production_capacity_analysis(product, product_forecast):
+    """
+    Explain whether the product's main production concern is:
+    - insufficient capacity,
+    - high utilization,
+    - labor-cost/automation opportunity,
+    - or no major production concern.
+    """
+
+    capacity = product.capacity_next_round
+    utilization = product.plant_utilization_percent
+    automation = product.automation_level
+    labor_cost = product.labor_cost
+
+    forecast_demand = None
+
+    if product_forecast is not None:
+        forecast_demand = product_forecast.value
+
+    observations = []
+
+    # Capacity versus forecast demand
+    if forecast_demand is not None:
+        capacity_gap = capacity - forecast_demand
+
+        if capacity_gap < 0:
+            observations.append(
+                f"Capacity shortage: forecast demand exceeds capacity by "
+                f"{number(abs(capacity_gap))} units."
+            )
+        elif capacity_gap <= max(100, capacity * 0.10):
+            observations.append(
+                f"Limited capacity headroom: only "
+                f"{number(capacity_gap)} units above forecast demand."
+            )
+        else:
+            observations.append(
+                f"Capacity appears sufficient with approximately "
+                f"{number(capacity_gap)} units of headroom."
+            )
+
+    # Utilization interpretation
+    if utilization >= 120:
+        observations.append(
+            "Utilization is critically high. Production capacity is under "
+            "significant pressure."
+        )
+    elif utilization >= 90:
+        observations.append(
+            "Utilization is high. Monitor production pressure and capacity needs."
+        )
+    elif utilization <= 50:
+        observations.append(
+            "Utilization is relatively low; immediate capacity expansion "
+            "does not appear necessary."
+        )
+
+    # Automation and labor-cost interpretation
+    if automation <= 4 and labor_cost >= 8:
+        observations.append(
+            "Automation/labor opportunity: automation is relatively low and "
+            "labor cost is relatively high. Increasing automation may reduce "
+            "future labor costs, but does not directly increase capacity."
+        )
+    elif automation <= 4 and labor_cost >= 7:
+        observations.append(
+            "Labor-cost opportunity: consider automation as a longer-term "
+            "cost-reduction decision."
+        )
+    elif automation >= 7:
+        observations.append(
+            "Automation is already relatively high; additional automation "
+            "may provide diminishing labor-cost benefits."
+        )
+
+    if not observations:
+        observations.append(
+            "No major production-capacity or labor-cost concern detected."
+        )
+
+    return observations
+
+
 def print_focus_product(
     product,
     product_forecast,
@@ -401,6 +485,8 @@ def print_focus_product(
     print(f"Potential share:     {percent(potential_share)}")
     print("\nPRODUCT")
     print("-" * 40)
+    print(f"Performance:         {product.perceptual_position.performance}")
+    print(f"Size:                {product.perceptual_position.size}")
     print(f"Price:               {money(product.list_price)}")
     print(f"MTBF:                {number(product.mtbf)}")
     print(f"Age:                 {product.age_years} years")
@@ -460,6 +546,17 @@ def print_focus_product(
 
             print(f"{symbol} {title}")
             print(f"  {explanation}")
+
+    production_observations = get_production_capacity_analysis(
+        product,
+        product_forecast,
+    )
+
+    print("\nPRODUCTION CAPACITY ANALYSIS")
+    print("-" * 40)
+
+    for observation in production_observations:
+        print(f"- {observation}")
 
     marketing_observations = get_marketing_observations(
         marketing_snapshot,
@@ -731,11 +828,11 @@ def main():
         product = get_product(report, product_name)
 
         print_focus_product(
-    product=product,
-    product_forecast=product_forecasts.get(product_name),
-    recommendations=recommendations_by_product[product_name],
-    market_share_analysis=market_share_analysis,
-    marketing_snapshot=get_segment_product_snapshot(
+        product=product,
+        product_forecast=product_forecasts.get(product_name),
+        recommendations=recommendations_by_product[product_name],
+        market_share_analysis=market_share_analysis,
+        marketing_snapshot=get_segment_product_snapshot(
         report,
         product_name,
     ),
