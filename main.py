@@ -91,31 +91,18 @@ def get_segment_product_snapshot(report, product_name):
 
 
 def get_product_observations(product, product_forecast):
+    """
+    Return concise, measurable product-level observations.
+
+    Production-capacity details are handled separately by
+    get_production_and_automation_analysis().
+    """
+
     observations = []
 
-    forecast_value = None
-    if product_forecast is not None:
-        forecast_value = getattr(product_forecast, "value", product_forecast)
-
-    if product.plant_utilization_percent is not None:
-        utilization = Decimal(str(product.plant_utilization_percent))
-
-        if utilization > Decimal("100"):
-            observations.append(
-                (
-                    "WARNING",
-                    "Production capacity is under pressure.",
-                    f"Plant utilization is {utilization:.1f}%, above available capacity."
-                )
-            )
-        elif utilization >= Decimal("85"):
-            observations.append(
-                (
-                    "WATCH",
-                    "Production capacity is relatively high.",
-                    f"Plant utilization is {utilization:.1f}%."
-                )
-            )
+    # ---------------------------------------------------------
+    # Inventory
+    # ---------------------------------------------------------
 
     if product.inventory_units is not None and product.units_sold:
         inventory = Decimal(str(product.inventory_units))
@@ -126,35 +113,53 @@ def get_product_observations(product, product_forecast):
                 (
                     "WARNING",
                     "Inventory is very low.",
-                    f"Only {number(inventory)} units are in inventory compared with "
-                    f"{number(sales)} units sold."
+                    f"Only {number(inventory)} units are in inventory "
+                    f"compared with {number(sales)} units sold.",
                 )
             )
+
+    # ---------------------------------------------------------
+    # Forecast trend
+    # ---------------------------------------------------------
+
+    forecast_value = None
+
+    if product_forecast is not None:
+        forecast_value = getattr(
+            product_forecast,
+            "value",
+            product_forecast,
+        )
 
     if forecast_value is not None and product.units_sold:
         current_sales = Decimal(str(product.units_sold))
         forecast = Decimal(str(forecast_value))
 
-        change = ((forecast - current_sales) / current_sales) * Decimal("100")
+        if current_sales != 0:
+            change = (
+                (forecast - current_sales)
+                / current_sales
+            ) * Decimal("100")
 
-        if change >= Decimal("10"):
-            observations.append(
-                (
-                    "OPPORTUNITY",
-                    "Forecast demand is increasing.",
-                    f"Forecast sales are {number(forecast)} units, "
-                    f"{change:+.1f}% versus current sales."
+            if change >= Decimal("10"):
+                observations.append(
+                    (
+                        "OPPORTUNITY",
+                        "Forecast demand is increasing.",
+                        f"Forecast sales are {number(forecast)} units, "
+                        f"{change:+.1f}% versus current sales.",
+                    )
                 )
-            )
-        elif change <= Decimal("-10"):
-            observations.append(
-                (
-                    "WATCH",
-                    "Forecast demand is decreasing.",
-                    f"Forecast sales are {number(forecast)} units, "
-                    f"{change:+.1f}% versus current sales."
+
+            elif change <= Decimal("-10"):
+                observations.append(
+                    (
+                        "WATCH",
+                        "Forecast demand is decreasing.",
+                        f"Forecast sales are {number(forecast)} units, "
+                        f"{change:+.1f}% versus current sales.",
+                    )
                 )
-            )
 
     return observations
 
@@ -331,15 +336,12 @@ def recommendation_topic(recommendation):
     return "OTHER"
 
 
-def get_production_capacity_analysis(product, product_forecast):
+def get_production_and_automation_analysis(product, product_forecast):
     """
-    Evaluate production capacity, utilization, and automation/labor conditions.
+    Provide concise production-capacity and automation guidance.
 
-    This function intentionally separates:
-    - physical capacity problems,
-    - high utilization,
-    - automation/labor-cost opportunities,
-    - and normal production conditions.
+    Capacity increases physical production capability.
+    Automation reduces labor cost but does not increase capacity.
     """
 
     capacity = product.capacity_next_round
@@ -350,24 +352,73 @@ def get_production_capacity_analysis(product, product_forecast):
     forecast_demand = None
 
     if product_forecast is not None:
-        forecast_demand = product_forecast.value
+        forecast_demand = getattr(
+            product_forecast,
+            "value",
+            product_forecast,
+        )
+
+    if forecast_demand is None:
+        forecast_demand = product.units_sold
 
     observations = []
 
+    if capacity is None:
+        return [
+            "Production-capacity analysis cannot be completed "
+            "from the available data."
+        ]
+
+    capacity = Decimal(str(capacity))
+
+    if forecast_demand is not None:
+        forecast_demand = Decimal(str(forecast_demand))
+
+    if utilization is not None:
+        utilization = Decimal(str(utilization))
+
+    if automation is not None:
+        automation = Decimal(str(automation))
+
+    if labor_cost is not None:
+        labor_cost = Decimal(str(labor_cost))
+
     # ---------------------------------------------------------
-    # 1. Capacity compared with forecast demand
+    # CAPSIM production cost formulas
     # ---------------------------------------------------------
 
-    if forecast_demand is not None and capacity is not None:
+    cost_per_capacity_unit = None
+    cost_to_double_capacity = None
+    cost_for_one_automation_level = None
+
+    if automation is not None:
+        cost_per_capacity_unit = (
+            Decimal("6") + (Decimal("4") * automation)
+        )
+
+        cost_to_double_capacity = (
+            capacity * cost_per_capacity_unit
+        )
+
+    cost_for_one_automation_level = capacity * Decimal("4")
+
+    # ---------------------------------------------------------
+    # Capacity interpretation
+    # ---------------------------------------------------------
+
+    if forecast_demand is not None:
         capacity_gap = capacity - forecast_demand
 
         if capacity_gap < 0:
             observations.append(
-                f"Capacity shortage: forecast demand exceeds listed capacity "
-                f"by {number(abs(capacity_gap))} units."
+                f"Capacity shortage: forecast demand exceeds listed "
+                f"capacity by {number(abs(capacity_gap))} units."
             )
 
-        elif capacity_gap <= max(100, capacity * 0.10):
+        elif capacity_gap <= max(
+            Decimal("100"),
+            capacity * Decimal("0.10"),
+        ):
             observations.append(
                 f"Limited capacity headroom: forecast demand is only "
                 f"{number(capacity_gap)} units below listed capacity."
@@ -380,199 +431,131 @@ def get_production_capacity_analysis(product, product_forecast):
             )
 
     # ---------------------------------------------------------
-    # 2. Utilization interpretation
+    # Utilization interpretation
     # ---------------------------------------------------------
 
     if utilization is not None:
-        if utilization >= 120:
+        if utilization >= Decimal("120"):
             observations.append(
-                "Utilization is critically high. Production capacity is under "
-                "significant pressure."
+                "Utilization is critically high; capacity expansion "
+                "should be prioritized."
             )
 
-        elif utilization >= 90:
+        elif utilization >= Decimal("90"):
             observations.append(
-                "Utilization is high. Monitor production pressure and future "
-                "capacity requirements."
+                "Utilization is high; monitor future capacity requirements."
             )
 
-        elif utilization <= 50:
+        elif utilization <= Decimal("50"):
             observations.append(
                 "Current utilization is relatively low; immediate capacity "
                 "expansion does not appear necessary."
             )
 
     # ---------------------------------------------------------
-    # 3. Automation and labor-cost interpretation
-    # ---------------------------------------------------------
-    #
-    # Automation is treated as a long-term labor-cost decision,
-    # NOT as a solution to a physical capacity shortage.
-    #
-    # The tighter threshold avoids flagging every product with
-    # moderately low automation.
+    # Automation interpretation
     # ---------------------------------------------------------
 
-    if automation is not None and labor_cost is not None:
+    if automation is not None:
 
-        if automation <= 3 and labor_cost >= 9:
+        if automation >= Decimal("10"):
             observations.append(
-                "Automation/labor opportunity: automation is relatively low "
-                "while labor cost is high. Increasing automation may improve "
-                "future margins, but does not directly increase production capacity."
+                "Automation is already at the maximum level."
+            )
+
+        elif (
+            forecast_demand is not None
+            and forecast_demand >= Decimal("1000")
+            and labor_cost is not None
+            and labor_cost >= Decimal("7")
+        ):
+            observations.append(
+                "Automation may be worth evaluating because of high "
+                "production volume and labor cost."
+            )
+
+        elif (
+            forecast_demand is not None
+            and forecast_demand >= Decimal("500")
+            and labor_cost is not None
+            and labor_cost >= Decimal("8")
+        ):
+            observations.append(
+                "Automation may be worth considering as a future "
+                "labor-cost reduction."
+            )
+
+        elif (
+            labor_cost is not None
+            and labor_cost >= Decimal("9")
+            and automation <= Decimal("3")
+        ):
+            observations.append(
+                "Automation may improve future labor costs, but current "
+                "production volume does not make it an immediate priority."
             )
 
     # ---------------------------------------------------------
-    # 4. Fallback if no meaningful concern was detected
+    # Upgrade costs
     # ---------------------------------------------------------
 
-    if not observations:
+    observations.append("---")
+
+    if cost_per_capacity_unit is not None:
         observations.append(
-            "No major production-capacity or labor-cost concern detected."
+            f"Adding 100 units of capacity would cost approximately "
+            f"${number(cost_per_capacity_unit * Decimal('100'))}."
+        )
+
+    if automation is not None and automation < Decimal("10"):
+        observations.append(
+            f"A 1.0-level automation increase would cost approximately "
+            f"${number(cost_for_one_automation_level)}."
+        )
+
+    # ---------------------------------------------------------
+    # Capacity priority over automation
+    # ---------------------------------------------------------
+
+    if (
+        forecast_demand is not None
+        and forecast_demand > capacity
+    ):
+        observations.append(
+            "Capacity expansion should be addressed before automation; "
+            "automation reduces labor cost but does not increase capacity."
         )
 
     return observations
 
 
-TOTAL_SIMULATION_ROUNDS = 6
-AUTOMATION_COST_PER_CAPACITY = Decimal("4")
-LABOR_SAVINGS_PER_AUTOMATION_POINT = Decimal("0.10")
-
-
-def get_production_automation_analysis(
-    product,
-    product_forecast,
-    current_round,
-):
+def is_useful_display_recommendation(recommendation):
     """
-    Evaluate whether automation deserves attention for the product.
-
-    CAPSIM automation rules:
-    - Automation ranges from 1.0 to 10.0.
-    - Each additional automation point reduces labor cost by
-      approximately 10%.
-    - Each automation point costs $4 per unit of capacity.
-    - Automation changes take a full year to take effect.
-
-    ROI is estimated using:
-        (labor savings * remaining rounds) / automation cost
-
-    These are review triggers, not guaranteed decisions.
+    Filter out vague or redundant recommendations from the
+    product-level Decision Focus display.
     """
 
-    automation = product.automation_level
-    labor_cost = product.labor_cost
-    capacity = product.capacity_next_round
+    action = str(
+        getattr(recommendation, "action", "")
+    ).strip().lower()
 
-    forecast_demand = None
-    if product_forecast is not None:
-        forecast_demand = product_forecast.value
+    rationale = str(
+        getattr(recommendation, "rationale", "")
+    ).strip().lower()
 
-    observations = []
+    combined = f"{action} {rationale}"
 
-    if automation is None or labor_cost is None or capacity is None:
-        return [
-            "Automation analysis cannot be completed from the available data."
-        ]
+    vague_terms = [
+        "positioning should be reviewed",
+        "age and positioning should be reviewed",
+        "whether positioning",
+        "whether age",
+    ]
 
-    if automation >= Decimal("10"):
-        return [
-            "Automation is already at the maximum level; no further increase is available."
-        ]
+    if any(term in combined for term in vague_terms):
+        return False
 
-    if forecast_demand is None:
-        forecast_demand = product.units_sold
-
-    if forecast_demand is None:
-        return [
-            "Automation priority cannot be determined without a production-volume estimate."
-        ]
-
-    automation = Decimal(str(automation))
-    labor_cost = Decimal(str(labor_cost))
-    capacity = Decimal(str(capacity))
-    forecast_demand = Decimal(str(forecast_demand))
-
-    remaining_rounds = max(
-        0,
-        TOTAL_SIMULATION_ROUNDS - current_round,
-    )
-
-    # CAPSIM charges $4 per unit of capacity for each
-    # additional automation point.
-    automation_cost = (
-        capacity * AUTOMATION_COST_PER_CAPACITY
-    )
-
-    # CAPSIM estimates approximately 10% labor-cost savings
-    # for each additional automation point.
-    annual_labor_savings = (
-        forecast_demand
-        * labor_cost
-        * LABOR_SAVINGS_PER_AUTOMATION_POINT
-    )
-
-    total_labor_savings = (
-        annual_labor_savings
-        * Decimal(str(remaining_rounds))
-    )
-
-    roi = None
-    if automation_cost > 0:
-        roi = (
-            total_labor_savings
-            / automation_cost
-        ) * Decimal("100")
-
-    # High production volume and meaningful labor cost make
-    # automation more worthy of consideration.
-    if forecast_demand >= Decimal("1000") and labor_cost >= Decimal("7"):
-        observations.append(
-            "Automation is worth evaluating due to high production volume and labor cost."
-        )
-
-        observations.append(
-            f"A 1-level increase would cost approximately "
-            f"${number(automation_cost)}."
-        )
-
-    elif forecast_demand >= Decimal("500") and labor_cost >= Decimal("8"):
-        observations.append(
-            "Automation may be worth evaluating due to production volume and labor cost."
-        )
-
-        observations.append(
-            f"A 1-level increase would cost approximately "
-            f"${number(automation_cost)}."
-        )
-
-    else:
-        observations.append(
-            "Automation is currently a low priority due to relatively low production volume."
-        )
-
-    # ROI is only meaningful when there are rounds remaining.
-    if roi is not None and remaining_rounds > 0:
-        observations.append(
-            f"Estimated {remaining_rounds}-round labor savings are "
-            f"approximately ${number(total_labor_savings)} "
-            f"({roi:.1f}% ROI)."
-        )
-
-    # Capacity problems should take priority because automation
-    # reduces labor cost but does not increase production capacity.
-    if forecast_demand > capacity:
-        observations.append(
-            "Capacity pressure should be addressed first; automation does not increase capacity."
-        )
-
-    # High automation can make R&D repositioning more difficult.
-    if automation >= Decimal("7"):
-        observations.append(
-            "Current automation is relatively high; consider the potential impact on future R&D repositioning."
-        )
-
-    return observations[:3]
+    return True
 
 
 def print_focus_product(
@@ -665,28 +648,19 @@ def print_focus_product(
     print(f"Automation:           {product.automation_level}")
 
 
-    production_observations = get_production_capacity_analysis(
+    production_observations = get_production_and_automation_analysis(
         product,
         product_forecast,
     )
 
-    print("\nPRODUCTION CAPACITY ANALYSIS")
+    print("\nPRODUCTION & AUTOMATION ANALYSIS")
     print("-" * 40)
 
     for observation in production_observations:
-        print(f"- {observation}")
-
-
-    automation_observations = get_production_automation_analysis(
-        product,
-        product_forecast,
-        current_round,
-    )
-
-    print("\nPRODUCTION AUTOMATION ANALYSIS")
-    print("-" * 40)
-    for observation in automation_observations:
-        print(f"- {observation}")
+        if observation == "---":
+            print("-" * 40)
+        else:
+            print(f"- {observation}")
 
     
     print("\nMARKETING")
@@ -746,29 +720,39 @@ def print_focus_product(
             print(f"⚠ {title}")
             print(f"  {explanation}")
 
-    # Build practical decision-focus items from the product's
-    # most relevant observations and recommendations.
+    # ---------------------------------------------------------
+    # DECISION FOCUS
+    # ---------------------------------------------------------
+
     decision_focus = []
 
-    
-    if product.plant_utilization_percent is not None:
-        utilization = Decimal(str(product.plant_utilization_percent))
+    # Capacity-related priorities
+    if product.capacity_next_round is not None:
+        capacity = Decimal(str(product.capacity_next_round))
 
-        if utilization > Decimal("100"):
-            decision_focus.append(
-                (
-                    "Review production capacity.",
-                    f"Plant utilization is currently {utilization:.1f}%."
-                )
-            )
-        elif utilization >= Decimal("85"):
-            decision_focus.append(
-                (
-                    "Monitor production capacity.",
-                    f"Plant utilization is currently {utilization:.1f}%."
-                )
-            )
+        if forecast_value is not None:
+            forecast_demand = Decimal(str(forecast_value))
+            capacity_gap = capacity - forecast_demand
 
+            if capacity_gap < 0:
+                decision_focus.append(
+                    (
+                        "Prioritize capacity expansion.",
+                        f"Forecast demand exceeds listed capacity by "
+                        f"{number(abs(capacity_gap))} units."
+                    )
+                )
+
+            elif capacity_gap <= max(100, capacity * Decimal("0.10")):
+                decision_focus.append(
+                    (
+                        "Monitor capacity closely.",
+                        f"Forecast demand is only {number(capacity_gap)} "
+                        f"units below listed capacity."
+                    )
+                )
+
+    # Inventory-related priorities
     if product.inventory_units is not None and product.units_sold:
         inventory = Decimal(str(product.inventory_units))
         sales = Decimal(str(product.units_sold))
@@ -776,80 +760,46 @@ def print_focus_product(
         if inventory < sales * Decimal("0.10"):
             decision_focus.append(
                 (
-                    "Review inventory levels.",
+                    "Protect inventory levels.",
                     f"Only {number(inventory)} units are available "
                     f"against {number(sales)} units sold."
                 )
             )
 
+    # Forecast-related priorities
     if forecast_change is not None:
         if forecast_change >= Decimal("10"):
             decision_focus.append(
                 (
                     "Prepare for higher demand.",
-                    f"Forecast sales are {forecast_change:+.1f}% above "
-                    "current sales."
+                    f"Forecast sales are {forecast_change:+.1f}% "
+                    f"above current sales."
                 )
             )
+
         elif forecast_change <= Decimal("-10"):
             decision_focus.append(
                 (
                     "Prepare for lower demand.",
-                    f"Forecast sales are {forecast_change:+.1f}% below "
-                    "current sales."
+                    f"Forecast sales are {forecast_change:+.1f}% "
+                    f"below current sales."
                 )
             )
+            
 
-    # Add marketing-related review items before engine recommendations.
-    for category, title, explanation in marketing_observations:
-        item = (title, explanation)
+    # Marketing-related priorities
+    for _, title, explanation in marketing_observations:
+        marketing_item = (title, explanation)
 
-        if item in decision_focus:
-            continue
+        if marketing_item not in decision_focus:
+            decision_focus.append(marketing_item)
 
-        decision_focus.append(item)
-
-        if len(decision_focus) >= 3:
-            break
-
-
-    if len(decision_focus) < 3:
-        for _, title, explanation in marketing_observations:
-            item = (title, explanation)
-
-            if item in decision_focus:
-                continue
-
-            decision_focus.append(item)
-
-            if len(decision_focus) >= 3:
-                break
-
-
-    # Add an engine recommendation if there is still room for another
-    # useful decision item.
-    for recommendation in recommendations:
-        action = str(getattr(recommendation, "action", "")).strip()
-        rationale = str(getattr(recommendation, "rationale", "")).strip()
-
-        if not action:
-            continue
-
-        item = (action, rationale)
-
-        if item in decision_focus:
-            continue
-
-        decision_focus.append(item)
-
-        if len(decision_focus) >= 3:
-            break
-
+    
     print("\nDECISION FOCUS")
     print("-" * 40)
 
     if decision_focus:
-        for action, rationale in decision_focus[:3]:
+        for action, rationale in decision_focus:
             print(f"  • {action}")
 
             if rationale:
