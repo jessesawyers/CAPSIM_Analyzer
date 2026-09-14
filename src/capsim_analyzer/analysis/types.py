@@ -172,6 +172,13 @@ class FinancialMetrics:
     cash: Decimal | None
     accounts_receivable: Decimal | None
     inventory: Decimal | None
+    total_current_assets: Decimal | None
+    current_liabilities: Decimal | None
+    working_capital: Decimal | None
+    current_ratio: Decimal | None
+    debt_to_assets: Decimal | None
+    inventory_to_current_assets: Decimal | None
+    cash_to_current_assets: Decimal | None
     total_assets: Decimal | None
     accounts_payable: Decimal | None
     long_term_debt: Decimal | None
@@ -184,6 +191,13 @@ class FinancialMetrics:
     debt_to_equity: Decimal | None
     balance_sheet_difference: Decimal | None
     balance_sheet_consistent: bool | None
+    total_current_assets: Decimal | None
+    current_liabilities: Decimal | None
+    working_capital: Decimal | None
+    current_ratio: Decimal | None
+    debt_to_assets: Decimal | None
+    inventory_to_current_assets: Decimal | None
+    cash_to_current_assets: Decimal | None
     cash_flow: Mapping[str, Decimal | None]
 
 

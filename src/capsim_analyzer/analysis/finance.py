@@ -45,6 +45,13 @@ def _metrics(company: Company, financials: CompanyFinancials | None) -> Financia
             cash=None,
             accounts_receivable=None,
             inventory=None,
+            total_current_assets=None,
+            current_liabilities=None,
+            working_capital=None,
+            current_ratio=None,
+            debt_to_assets=None,
+            inventory_to_current_assets=None,
+            cash_to_current_assets=None,
             total_assets=None,
             accounts_payable=None,
             long_term_debt=None,
@@ -59,21 +66,56 @@ def _metrics(company: Company, financials: CompanyFinancials | None) -> Financia
             balance_sheet_consistent=None,
             cash_flow={},
         )
-
+        
     income = financials.income_statement
     balance = financials.balance_sheet
+
+    total_current_assets = balance.get("total_current_assets")
+    accounts_payable = balance.get("accounts_payable")
     current_debt = balance.get("current_debt")
     long_term_debt = balance.get("long_term_debt")
+
+    current_liabilities = _sum_if_present(
+        accounts_payable,
+        current_debt,
+    )
+
+    working_capital = (
+        None
+        if total_current_assets is None or current_liabilities is None
+        else total_current_assets - current_liabilities
+    )
+
+    current_ratio = _ratio(
+        total_current_assets,
+        current_liabilities,
+    )
+
     total_equity = balance.get("total_equity")
     total_debt = _sum_if_present(current_debt, long_term_debt)
+
     assets = balance.get("total_assets")
     liabilities = balance.get("total_liabilities")
     balance_equity = balance.get("total_equity")
+
+    debt_to_assets = _ratio(total_debt, assets)
+
+    inventory_to_current_assets = _ratio(
+        balance.get("inventory"),
+        total_current_assets,
+    )
+
+    cash_to_current_assets = _ratio(
+        balance.get("cash"),
+        total_current_assets,
+    )
+
     balance_difference = (
         None
         if assets is None or liabilities is None or balance_equity is None
         else assets - liabilities - balance_equity
     )
+    
     return FinancialMetrics(
         company=company,
         financials_available=True,
@@ -89,8 +131,15 @@ def _metrics(company: Company, financials: CompanyFinancials | None) -> Financia
         cash=balance.get("cash"),
         accounts_receivable=balance.get("accounts_receivable"),
         inventory=balance.get("inventory"),
+        total_current_assets=total_current_assets,
+        current_liabilities=current_liabilities,
+        working_capital=working_capital,
+        current_ratio=current_ratio,
+        debt_to_assets=debt_to_assets,
+        inventory_to_current_assets=inventory_to_current_assets,
+        cash_to_current_assets=cash_to_current_assets,
         total_assets=assets,
-        accounts_payable=balance.get("accounts_payable"),
+        accounts_payable=accounts_payable,
         long_term_debt=long_term_debt,
         common_stock=balance.get("common_stock"),
         retained_earnings=balance.get("retained_earnings"),

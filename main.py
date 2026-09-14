@@ -59,6 +59,388 @@ def percent(value):
         return str(value)
 
 
+def ratio(value):
+    """Format a ratio for concise CLI output."""
+    if value is None:
+        return "N/A"
+
+    try:
+        return f"{Decimal(str(value)):.2f}"
+    except Exception:
+        return str(value)
+
+
+def get_financial_observations(financials):
+    """
+    Convert financial metrics into concise, decision-oriented observations.
+
+    These are interpretation/review triggers, not guaranteed decisions.
+    """
+
+    observations = []
+
+    if financials is None:
+        return observations
+
+    current_ratio = getattr(financials, "current_ratio", None)
+    working_capital = getattr(financials, "working_capital", None)
+    cash_to_current_assets = getattr(
+        financials,
+        "cash_to_current_assets",
+        None,
+    )
+    debt_to_assets = getattr(financials, "debt_to_assets", None)
+    debt_to_equity = getattr(financials, "debt_to_equity", None)
+    current_debt = getattr(financials, "current_debt", None)
+    long_term_debt = getattr(financials, "long_term_debt", None)
+    inventory_to_current_assets = getattr(
+        financials,
+        "inventory_to_current_assets",
+        None,
+    )
+    net_profit_margin = getattr(
+        financials,
+        "net_profit_margin",
+        None,
+    )
+    contribution_margin_percent = getattr(
+        financials,
+        "contribution_margin_percent",
+        None,
+    )
+
+    # ---------------------------------------------------------
+    # Liquidity
+    # ---------------------------------------------------------
+
+    if current_ratio is not None:
+        current_ratio = Decimal(str(current_ratio))
+
+        if current_ratio >= Decimal("2"):
+            observations.append(
+                (
+                    "POSITIVE",
+                    "Strong short-term liquidity.",
+                    (
+                        f"Current assets substantially exceed current "
+                        f"liabilities, with a current ratio of "
+                        f"{ratio(current_ratio)}."
+                    ),
+                )
+            )
+
+        elif current_ratio < Decimal("1"):
+            observations.append(
+                (
+                    "WARNING",
+                    "Short-term liquidity is a concern.",
+                    (
+                        f"The current ratio is only {ratio(current_ratio)}, "
+                        "so current liabilities exceed current assets."
+                    ),
+                )
+            )
+
+        else:
+            observations.append(
+                (
+                    "WATCH",
+                    "Short-term liquidity is relatively tight.",
+                    (
+                        f"The current ratio is {ratio(current_ratio)}, "
+                        "leaving less short-term financial flexibility."
+                    ),
+                )
+            )
+
+    # ---------------------------------------------------------
+    # Working capital
+    # ---------------------------------------------------------
+
+    if working_capital is not None:
+        working_capital = Decimal(str(working_capital))
+
+        if working_capital > 0:
+            observations.append(
+                (
+                    "POSITIVE",
+                    "Working capital is positive.",
+                    (
+                        f"Baldwin has {money(working_capital)} in "
+                        "working capital to support ongoing operations."
+                    ),
+                )
+            )
+
+        elif working_capital < 0:
+            observations.append(
+                (
+                    "WARNING",
+                    "Working capital is negative.",
+                    (
+                        f"Current liabilities exceed current assets by "
+                        f"{money(abs(working_capital))}."
+                    ),
+                )
+            )
+
+    # ---------------------------------------------------------
+    # Cash position
+    # ---------------------------------------------------------
+
+    if cash_to_current_assets is not None:
+        cash_to_current_assets = Decimal(str(cash_to_current_assets))
+
+        cash_percent = cash_to_current_assets * Decimal("100")
+
+        if cash_to_current_assets >= Decimal("0.50"):
+            observations.append(
+                (
+                    "POSITIVE",
+                    "Cash position is strong.",
+                    (
+                        f"Cash represents {cash_percent:.1f}% of current "
+                        "assets, providing substantial liquidity for "
+                        "near-term operating needs."
+                    ),
+                )
+            )
+
+        elif cash_to_current_assets < Decimal("0.20"):
+            observations.append(
+                (
+                    "WATCH",
+                    "Cash reserves are relatively limited.",
+                    (
+                        f"Cash represents only {cash_percent:.1f}% of "
+                        "current assets, so major spending decisions "
+                        "should be evaluated carefully."
+                    ),
+                )
+            )
+
+    # ---------------------------------------------------------
+    # Debt / leverage
+    # ---------------------------------------------------------
+
+    if debt_to_assets is not None:
+        debt_to_assets = Decimal(str(debt_to_assets))
+
+        if debt_to_assets >= Decimal("0.60"):
+            observations.append(
+                (
+                    "WARNING",
+                    "Debt leverage is relatively high.",
+                    (
+                        f"Debt represents {debt_to_assets * Decimal('100'):.1f}% "
+                        "of total assets, so additional borrowing should "
+                        "be evaluated carefully."
+                    ),
+                )
+            )
+
+        elif debt_to_assets <= Decimal("0.40"):
+            observations.append(
+                (
+                    "POSITIVE",
+                    "Debt levels appear manageable.",
+                    (
+                        f"Debt represents {debt_to_assets * Decimal('100'):.1f}% "
+                        "of total assets."
+                    ),
+                )
+            )
+
+        else:
+            observations.append(
+                (
+                    "WATCH",
+                    "Debt levels deserve monitoring.",
+                    (
+                        f"Debt represents {debt_to_assets * Decimal('100'):.1f}% "
+                        "of total assets."
+                    ),
+                )
+            )
+
+    if debt_to_equity is not None:
+        debt_to_equity = Decimal(str(debt_to_equity))
+
+        if debt_to_equity >= Decimal("1.5"):
+            observations.append(
+                (
+                    "WARNING",
+                    "Debt is high relative to equity.",
+                    (
+                        f"Debt is {ratio(debt_to_equity)}x total equity, "
+                        "which may limit flexibility for additional financing."
+                    ),
+                )
+            )
+
+    # ---------------------------------------------------------
+    # Debt structure
+    # ---------------------------------------------------------
+
+    if (
+        current_debt is not None
+        and long_term_debt is not None
+    ):
+        current_debt = Decimal(str(current_debt))
+        long_term_debt = Decimal(str(long_term_debt))
+
+        if current_debt == 0 and long_term_debt > 0:
+            observations.append(
+                (
+                    "POSITIVE",
+                    "Existing debt is primarily long-term.",
+                    (
+                        "There is currently no current debt, reducing "
+                        "near-term repayment pressure."
+                    ),
+                )
+            )
+
+    # ---------------------------------------------------------
+    # Inventory position
+    # ---------------------------------------------------------
+
+    if inventory_to_current_assets is not None:
+        inventory_to_current_assets = Decimal(
+            str(inventory_to_current_assets)
+        )
+
+        inventory_percent = (
+            inventory_to_current_assets * Decimal("100")
+        )
+
+        if inventory_to_current_assets >= Decimal("0.40"):
+            observations.append(
+                (
+                    "WATCH",
+                    "A large portion of current assets is tied up in inventory.",
+                    (
+                        f"Inventory represents {inventory_percent:.1f}% "
+                        "of current assets. Production decisions should "
+                        "be checked against expected demand."
+                    ),
+                )
+            )
+
+    # ---------------------------------------------------------
+    # Profitability
+    # ---------------------------------------------------------
+
+    if net_profit_margin is not None:
+        net_profit_margin = Decimal(str(net_profit_margin))
+
+        if net_profit_margin >= Decimal("10"):
+            observations.append(
+                (
+                    "POSITIVE",
+                    "Profitability is strong.",
+                    (
+                        f"Net profit margin is {net_profit_margin:.1f}%, "
+                        "indicating healthy conversion of sales into profit."
+                    ),
+                )
+            )
+
+        elif net_profit_margin < Decimal("0"):
+            observations.append(
+                (
+                    "WARNING",
+                    "The company is currently unprofitable.",
+                    (
+                        f"Net profit margin is "
+                        f"{net_profit_margin:.1f}%."
+                    ),
+                )
+            )
+
+        elif net_profit_margin < Decimal("5"):
+            observations.append(
+                (
+                    "WARNING",
+                    "Profitability is relatively weak.",
+                    (
+                        f"Net profit margin is "
+                        f"{net_profit_margin:.1f}%, "
+                        "so major spending decisions should be evaluated "
+                        "carefully against expected returns."
+                    ),
+                )
+            )
+
+        else:
+            observations.append(
+                (
+                    "WATCH",
+                    "Profitability is positive but modest.",
+                    (
+                        f"Net profit margin is "
+                        f"{net_profit_margin:.1f}%."
+                    ),
+                )
+            )
+
+    # ---------------------------------------------------------
+    # Overall investment implication
+    # ---------------------------------------------------------
+
+    liquidity_supports_investment = (
+        current_ratio is not None
+        and current_ratio >= Decimal("2")
+        and working_capital is not None
+        and working_capital > 0
+    )
+
+    leverage_is_manageable = (
+        debt_to_assets is not None
+        and debt_to_assets < Decimal("0.60")
+    )
+
+    profitable = (
+        net_profit_margin is not None
+        and net_profit_margin > 0
+    )
+
+    if (
+        liquidity_supports_investment
+        and leverage_is_manageable
+        and profitable
+    ):
+        observations.append(
+            (
+                "IMPLICATION",
+                "Financial position appears capable of supporting near-term investment.",
+                (
+                    "Liquidity is healthy, leverage is manageable, and the "
+                    "company is profitable. Spending decisions should still "
+                    "be evaluated against expected operational returns."
+                ),
+            )
+        )
+
+    elif (
+        liquidity_supports_investment
+        and profitable
+    ):
+        observations.append(
+            (
+                "IMPLICATION",
+                "Some near-term investment appears financially supportable.",
+                (
+                    "Liquidity and profitability provide some flexibility, "
+                    "but leverage or another financial factor warrants "
+                    "additional caution."
+                ),
+            )
+        )
+
+    return observations
+
+
 def get_focus_products(report):
     """
     Return the currently active products belonging to the focus company.
@@ -411,8 +793,7 @@ def get_production_and_automation_analysis(product, product_forecast):
 
         if capacity_gap < 0:
             observations.append(
-                f"Capacity shortage: forecast demand exceeds listed "
-                f"capacity by {number(abs(capacity_gap))} units."
+                f"Capacity shortage: {number(abs(capacity_gap))} units."
             )
 
         elif capacity_gap <= max(
@@ -420,14 +801,12 @@ def get_production_and_automation_analysis(product, product_forecast):
             capacity * Decimal("0.10"),
         ):
             observations.append(
-                f"Limited capacity headroom: forecast demand is only "
-                f"{number(capacity_gap)} units below listed capacity."
+                f"Capacity headroom: {number(capacity_gap)} units."
             )
 
         else:
             observations.append(
-                f"Forecast demand is approximately "
-                f"{number(capacity_gap)} units below listed capacity."
+                f"Forecast demand: {number(capacity_gap)} units."
             )
 
     # ---------------------------------------------------------
@@ -966,38 +1345,128 @@ def main():
         )
 
     # ---------------------------------------------------------
-    # FINANCIAL SNAPSHOT
+    # FINANCIAL POSITION & HEALTH
     # ---------------------------------------------------------
 
     print("\n" + "=" * 60)
-    print("                 FINANCIAL SNAPSHOT")
+    print("              FINANCIAL POSITION & HEALTH")
     print("=" * 60)
 
     companies = getattr(financial_analysis, "companies", {})
-
     baldwin_financials = companies.get(Company.BALDWIN)
 
     if baldwin_financials:
+        print("\nBALANCE SHEET")
+        print("-" * 40)
+
         print(
-            f"Cash:               "
+            f"Cash:                    "
             f"{money(getattr(baldwin_financials, 'cash', None))}"
         )
         print(
-            f"Sales:              "
+            f"Accounts receivable:     "
+            f"{money(getattr(baldwin_financials, 'accounts_receivable', None))}"
+        )
+        print(
+            f"Inventory:               "
+            f"{money(getattr(baldwin_financials, 'inventory', None))}"
+        )
+        print(
+            f"Accounts payable:        "
+            f"{money(getattr(baldwin_financials, 'accounts_payable', None))}"
+        )
+        print(
+            f"Current debt:            "
+            f"{money(getattr(baldwin_financials, 'current_debt', None))}"
+        )
+        print(
+            f"Long-term debt:          "
+            f"{money(getattr(baldwin_financials, 'long_term_debt', None))}"
+        )
+        print(
+            f"Total debt:              "
+            f"{money(getattr(baldwin_financials, 'total_debt', None))}"
+        )
+        print(
+            f"Total assets:            "
+            f"{money(getattr(baldwin_financials, 'total_assets', None))}"
+        )
+        print(
+            f"Total equity:            "
+            f"{money(getattr(baldwin_financials, 'total_equity', None))}"
+        )
+
+        print("\nFINANCIAL HEALTH METRICS")
+        print("-" * 40)
+
+        print(
+            f"Working capital:         "
+            f"{money(getattr(baldwin_financials, 'working_capital', None))}"
+        )
+        print(
+            f"Current ratio:           "
+            f"{ratio(getattr(baldwin_financials, 'current_ratio', None))}"
+        )
+        print(
+            f"Debt / equity:           "
+            f"{ratio(getattr(baldwin_financials, 'debt_to_equity', None))}"
+        )
+        print(
+            f"Debt / assets:           "
+            f"{percent(getattr(baldwin_financials, 'debt_to_assets', None) * Decimal('100') if getattr(baldwin_financials, 'debt_to_assets', None) is not None else None)}"
+        )
+        print(
+            f"Inventory / current assets: "
+            f"{percent(getattr(baldwin_financials, 'inventory_to_current_assets', None) * Decimal('100') if getattr(baldwin_financials, 'inventory_to_current_assets', None) is not None else None)}"
+        )
+        print(
+            f"Cash / current assets:   "
+            f"{percent(getattr(baldwin_financials, 'cash_to_current_assets', None) * Decimal('100') if getattr(baldwin_financials, 'cash_to_current_assets', None) is not None else None)}"
+        )
+
+        print("\nPROFITABILITY")
+        print("-" * 40)
+
+        print(
+            f"Sales:                   "
             f"{money(getattr(baldwin_financials, 'revenue', None))}"
         )
         print(
-            f"Net profit:         "
-            f"{money(getattr(baldwin_financials, 'net_profit', None))}"
+            f"Contribution margin:     "
+            f"{money(getattr(baldwin_financials, 'contribution_margin', None))}"
         )
         print(
-            f"EBIT:                "
+            f"EBIT:                    "
             f"{money(getattr(baldwin_financials, 'ebit', None))}"
         )
         print(
-            f"Contribution margin: "
-            f"{money(getattr(baldwin_financials, 'contribution_margin', None))}"
+            f"Net profit:              "
+            f"{money(getattr(baldwin_financials, 'net_profit', None))}"
         )
+        print(
+            f"Net profit margin:       "
+            f"{percent(getattr(baldwin_financials, 'net_profit_margin', None))}"
+        )
+
+        financial_observations = get_financial_observations(
+            baldwin_financials,
+        )
+
+        if financial_observations:
+            print("\nFINANCIAL OBSERVATIONS")
+            print("-" * 40)
+
+            for level, title, explanation in financial_observations:
+                symbol = {
+                    "POSITIVE": "✓",
+                    "WARNING": "⚠",
+                    "WATCH": "→",
+                    "IMPLICATION": "→",
+                }.get(level, "•")
+
+                print(f"{symbol} {title}")
+                print(f"  {explanation}")
+
     else:
         print("Financial information is incomplete for Baldwin.")
 
