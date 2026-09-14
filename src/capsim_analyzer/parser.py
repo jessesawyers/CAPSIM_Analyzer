@@ -45,7 +45,9 @@ _ROW = re.compile(
 )
 _SEGMENT_PRODUCT_ROW = re.compile(
     r"^(?P<name>[A-Za-z]+)\s+(?P<share>\d+)%\s+(?P<units>[\d,]+)\s+"
-    r"(?P<revision>\d{1,2}/\d{1,2}/\d{4})\s+(?P<performance>\d+(?:\.\d+)?)\s+"
+    r"(?P<revision>\d{1,2}/\d{1,2}/\d{4})\s+"
+    r"(?:(?P<stock_out>YES)\s+)?"
+    r"(?P<performance>\d+(?:\.\d+)?)\s+"
     r"(?P<size>\d+(?:\.\d+)?)\s+\$(?P<price>[\d.]+)\s+(?P<mtbf>\d+)\s+"
     r"(?P<age>\d+(?:\.\d+)?)\s+\$(?P<promotion>[\d,]+)\s+"
     r"(?P<awareness>\d+)%\s+\$(?P<sales>[\d,]+)\s+"
@@ -271,10 +273,13 @@ def _parse_financial_statements(text: str) -> list[CompanyFinancials]:
         text,
         re.DOTALL,
     )
+
     if match is None:
         raise ValueError("Annual Report financial statements could not be parsed")
+
     section = match.group(0)
     company = Company(match.group("company"))
+
     return [
         CompanyFinancials(
             company=company,
@@ -288,9 +293,11 @@ def _parse_financial_statements(text: str) -> list[CompanyFinancials]:
 def _parse_balance_sheet(section: str) -> dict[str, Decimal | None]:
     labels = {
         "Cash": "cash",
+        "Accounts Receivable": "accounts_receivable",
         "Account Receivable": "accounts_receivable",
         "Inventory": "inventory",
         "Total Current Assets": "total_current_assets",
+        "Plant and equipment": "plant_and_equipment",
         "Plant & Equipment": "plant_and_equipment",
         "Accumulated Depreciation": "accumulated_depreciation",
         "Total Fixed Assets": "total_fixed_assets",
@@ -302,39 +309,67 @@ def _parse_balance_sheet(section: str) -> dict[str, Decimal | None]:
         "Common Stock": "common_stock",
         "Retained Earnings": "retained_earnings",
         "Total Equity": "total_equity",
+        "Total Liabilities & Owners Equity": "total_liabilities_and_equity",
         "Total Liab. & O. Equity": "total_liabilities_and_equity",
     }
-    return _parse_labeled_amounts(section, labels)
+
+    return _parse_current_year_labeled_amounts(section, labels)
 
 
 def _parse_cash_flow_statement(section: str) -> dict[str, Decimal | None]:
     start = section.index("Cash Flow Statement")
-    end = section.index("2026 Income Statement")
+
+    income_statement_match = re.search(
+        r"\d{4} Income Statement",
+        section[start:],
+    )
+
+    if income_statement_match is None:
+        raise ValueError("Income Statement heading could not be found")
+
+    end = start + income_statement_match.start()
     section = section[start:end]
+
     labels = {
         "Net Income(Loss)": "net_income_loss",
         "Depreciation": "depreciation",
-        "Extraordinary gains/losses/writeoffs": "extraordinary_gains_losses_writeoffs",
+        "Extraordinary gains/losses/writeoffs": (
+            "extraordinary_gains_losses_writeoffs"
+        ),
         "Accounts Payable": "accounts_payable",
         "Inventory": "inventory",
         "Accounts Receivable": "accounts_receivable",
         "Net cash from operation": "net_cash_from_operations",
+        "Net cash from operations": "net_cash_from_operations",
         "Plant Improvements": "plant_improvements",
+        "Plant improvements(net)": "plant_improvements",
         "Dividends paid": "dividends_paid",
         "Sales of common stock": "sales_of_common_stock",
         "Purchase of common stock": "purchase_of_common_stock",
         "Cash from long term debt": "cash_from_long_term_debt",
+        "Cash from long term debt issued": "cash_from_long_term_debt",
         "Retirement of long term debt": "retirement_of_long_term_debt",
+        "Early retirement of long term debt": "retirement_of_long_term_debt",
         "Change in current debt(net)": "change_in_current_debt",
         "Net cash from financing activities": "net_cash_from_financing",
         "Net change in cash position": "net_change_in_cash",
         "Closing cash position": "closing_cash",
     }
-    return _parse_labeled_amounts(section, labels)
+
+    return _parse_current_year_labeled_amounts(section, labels)
 
 
 def _parse_income_statement(section: str) -> dict[str, Decimal | None]:
-    section = section[section.index("2026 Income Statement"):]
+    income_statement_match = re.search(
+        r"\d{4} Income Statement",
+        section,
+    )
+
+    if not income_statement_match:
+        raise ValueError("Income Statement section not found")
+
+    section = section[income_statement_match.start():]
+
     labels = {
         "Sales": "sales",
         "Direct Labor": "direct_labor",
@@ -356,38 +391,79 @@ def _parse_income_statement(section: str) -> dict[str, Decimal | None]:
         "Profit Sharing": "profit_sharing",
         "Net Profit": "net_profit",
     }
+
     values: dict[str, Decimal | None] = {}
+
     for label, key in labels.items():
-        matches = re.findall(rf"^{re.escape(label)}\s+(.+)$", section, re.MULTILINE)
+        matches = re.findall(
+            rf"^{re.escape(label)}\s+(.+)$",
+            section,
+            re.MULTILINE,
+        )
+
         if not matches:
             continue
-        amounts = re.findall(r"\(?\$[\d,]+\)?", matches[-1])
-        if label == "Sales":
-            amounts = re.findall(r"\(?\$[\d,]+\)?", matches[0])
+
+        # "Sales" appears twice in the income statement:
+        # the first occurrence is total product sales,
+        # while the later occurrence is the SG&A sales expense.
+        target = matches[0] if label == "Sales" else matches[-1]
+
+        amounts = re.findall(
+            r"\(?\$[\d,]+\)?",
+            target,
+        )
+
         if amounts:
-            values[key] = _money(amounts[-1] if len(amounts) == 1 else amounts[-1])
+            values[key] = _money(amounts[-1])
+
     return values
 
 
-def _parse_labeled_amounts(
+def _parse_current_year_labeled_amounts(
     section: str,
     labels: dict[str, str],
 ) -> dict[str, Decimal | None]:
     values: dict[str, Decimal | None] = {}
+
     for label, key in labels.items():
-        match = re.search(rf"^{re.escape(label)}\s+(\(?\$[\d,]+\)?)\s*$", section, re.MULTILINE)
-        if match:
-            values[key] = _money(match.group(1))
-    missing = [key for label, key in labels.items() if key not in values]
+        matches = re.findall(
+            rf"^{re.escape(label)}\s+(.+)$",
+            section,
+            re.MULTILINE,
+        )
+
+        if not matches:
+            continue
+
+        amounts = re.findall(
+            r"\(?\$[\d,]+\)?",
+            matches[0],
+        )
+
+        if amounts:
+            values[key] = _money(amounts[0])
+
+    missing = [
+        key
+        for key in set(labels.values())
+        if key not in values
+    ]
+
     if missing:
-        raise ValueError(f"financial statement values missing: {', '.join(missing)}")
+        raise ValueError(
+            f"financial statement values missing: {', '.join(sorted(missing))}"
+        )
+
     return values
 
 
 def _money(value: str) -> Decimal:
     negative = value.startswith("(") and value.endswith(")")
     digits = value.strip("()$").replace(",", "")
+
     amount = Decimal(digits)
+
     return -amount if negative else amount
 
 

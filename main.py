@@ -606,11 +606,11 @@ def print_focus_product(
     forecast_change = None
 
     if product_forecast is not None:
-        forecast_value = getattr(product_forecast, "value", product_forecast)
-        forecast_status = getattr(product_forecast, "status", None)
+        forecast_value = product_forecast.value
+        forecast_status = product_forecast.status
 
-        if product.units_sold:
-             forecast_change = (
+        if forecast_value is not None and product.units_sold:
+            forecast_change = (
                 (Decimal(str(forecast_value)) - Decimal(str(product.units_sold)))
                 / Decimal(str(product.units_sold))
             ) * Decimal("100")

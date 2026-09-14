@@ -108,7 +108,7 @@ def test_history_supports_partial_financial_coverage_and_real_round_0_report():
     from pathlib import Path
     from capsim_analyzer.parser import parse_courier_pdf
 
-    report = parse_courier_pdf(Path(__file__).parents[1] / "data" / "CourierC165051R0TBK0CA.PDF")
+    report = parse_courier_pdf(Path(__file__).parents[1] / "data" / "Week_0.PDF")
     history = analyze_history([report])
 
     assert history.reports[0] is report

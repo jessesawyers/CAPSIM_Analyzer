@@ -1,0 +1,747 @@
+Round: 1
+Dec. 31,
+2027
+C165051
+Andrews
+Sydney Humbert
+Paige Mefford
+Avery Miiller
+Joey Neltner
+Maria Nolan
+Baldwin
+Sawyer Brisson
+Brantley Morrison
+Sam Pennix
+Jesse Sawyers
+Ben Smith
+Chester
+Sadie Daher
+Gabriella Goulet
+Hayden Hodge
+Cooper Tidball
+Digby
+Sydney Jenkins
+Skylar Lundeen
+Kyleigh Roche
+Rosa Stucke
+Erie
+Grant Burson
+Jackson Hall
+Bhavya Mehta
+Jeremy Proctor
+Ferris
+Selected Financial Statistics
+Andrews Baldwin Chester Digby Erie Ferris
+ROS 5.4% 6.7% -1.4% 7.0% 5.9% 6.9%
+Asset Turnover 1.12 1.04 0.87 1.19 1.00 1.32
+ROA 6.1% 7.0% -1.2% 8.4% 5.8% 9.1%
+Leverage 2.1 1.8 1.9 1.8 1.7 1.9
+ROE 12.9% 12.7% -2.4% 15.4% 9.9% 17.5%
+Emergency Loan $0 $0 $0 $0 $0 $0
+Sales $131,393,553 $108,743,953 $99,963,703 $124,911,856 $116,050,719 $123,457,699
+EBIT $17,964,477 $16,874,370 $4,011,090 $19,161,108 $16,085,471 $18,164,607
+Profits $7,126,423 $7,295,797 ($1,430,591) $8,752,449 $6,793,268 $8,525,388
+Cumulative Profit $11,314,930 $11,484,304 $2,757,916 $12,940,956 $10,981,775 $12,713,895
+SG&A / Sales 8.5% 9.7% 15.6% 9.1% 10.2% 13.0%
+Contrib. Margin % 28.4% 32.7% 29.6% 31.3% 32.4% 33.3%
+CAPSTONE ® COURIER Page 1
+Stock & Bonds C165051 Round: 1
+Dec. 31, 2027
+Stock Market Summary
+Company Close Change Shares
+MarketCap
+($M)
+Book Value
+Per Share
+EPS Dividend Yield P/E
+Andrews $44.41 $10.16 2,000,000 $89 $27.53 $3.56 $0.00 0.0% 12.5
+Baldwin $44.63 $10.38 2,058,388 $92 $27.81 $3.54 $0.00 0.0% 12.6
+Chester $29.49 ($4.76) 2,399,957 $71 $25.09 ($0.60) $0.00 0.0% -49.5
+Digby $47.56 $13.31 2,029,194 $97 $27.93 $4.31 $0.50 1.1% 11.0
+Erie $43.20 $8.94 2,399,957 $104 $28.52 $2.83 $0.00 0.0% 15.3
+Ferris $47.21 $12.96 2,000,000 $94 $24.38 $4.26 $3.85 8.2% 11.1
+Bond Market Summary
+Company Series# Face Yield Close$ S&P Company Series# Face Yield Close$ S&P
+Andrews Digby
+11.0S2028 $6,950,000 11.1% 99.02 CCC 11.0S2028 $6,950,000 11.0% 99.73 BB
+12.5S2030 $13,900,000 12.4% 100.96 CCC 12.5S2030 $13,900,000 12.1% 102.92 BB
+14.0S2032 $20,850,000 13.1% 106.83 CCC 14.0S2032 $20,850,000 12.7% 109.90 BB
+11.3S2037 $12,000,000 11.8% 95.50 CCC Erie
+Baldwin 11.0S2028 $6,950,000 11.0% 100.18 BBB
+11.0S2028 $6,950,000 11.0% 99.82 BB 12.5S2030 $13,900,000 12.0% 104.17 BBB
+12.5S2030 $13,900,000 12.1% 103.17 BB 14.0S2032 $20,850,000 12.5% 111.89 BBB
+14.0S2032 $20,850,000 12.7% 110.30 BB Ferris
+Chester 12.5S2030 $5,899,561 12.2% 102.42 B
+11.0S2028 $6,950,000 11.0% 99.55 B 14.0S2032 $20,850,000 12.8% 109.13 B
+12.5S2030 $13,900,000 12.2% 102.42 B
+14.0S2032 $20,850,000 12.8% 109.13 B
+11.3S2037 $7,000,000 11.4% 98.85 B
+Next Year's Prime Rate7.50%
+CAPSTONE ® COURIER Page 2
+Financial Summary C165051 Round: 1
+Dec. 31, 2027
+Cash Flow Statement Survey Andrews Baldwin Chester Digby Erie Ferris
+CashFlows from operating activities
+Net Income(Loss) $7,126 $7,296 ($1,431) $8,752 $6,793 $8,525
+Adjustment for non-cash items:
+Depreciation $7,587 $7,960 $8,973 $8,547 $9,000 $5,853
+Extraordinary gains/losses/writeoffs $0 $0 $0 $0 $0 $774
+Changes in current assets and liablilities
+Accounts payable $1,598 ($1,256) ($952) ($180) ($388) ($114)
+Inventory ($3,692) $8,376 $891 $7,803 $2,282 $3,021
+Accounts Receivable ($2,492) ($630) $91 ($7,093) ($1,231) ($1,840)
+Net cash from operations $10,127 $21,746 $7,573 $17,830 $16,456 $16,219
+Cash flows from investing activities
+Plant improvements(net) $0 ($5,600) ($20,800) ($14,400) ($21,200) $15,220
+Cash flows from financing activities
+Dividends paid $0 $0 $0 ($1,015) $0 ($7,699)
+Sales of common stock $0 $2,000 $13,700 $1,000 $13,700 $0
+Purchase of common stock $0 $0 $0 $0 $0 $0
+Cash from long term debt issued $12,000 $0 $7,000 $0 $0 $0
+Early retirement of long term debt $0 $0 $0 $0 $0 ($15,211)
+Retirement of current debt $0 $0 $0 $0 $0 $0
+Cash from current debt borrowing $0 $0 $0 $0 $0 $11,359
+Cash from emergency loan $0 $0 $0 $0 $0 $0
+Net cash from financing activities $12,000 $2,000 $20,700 ($15) $13,700 ($11,551)
+Net change in cash position $22,127 $18,146 $7,473 $3,415 $8,956 $19,888
+Balance Sheet Survey Andrews Baldwin Chester Digby Erie Ferris
+Cash $25,560 $21,580 $10,906 $6,849 $12,390 $23,321
+Accounts Receivable $10,799 $8,938 $8,216 $15,400 $9,538 $10,147
+Inventory $12,310 $241 $7,727 $815 $6,335 $5,596
+Total Current Assets $48,670 $30,758 $26,849 $23,063 $28,263 $39,065
+Plant and equipment $113,800 $119,400 $134,600 $128,200 $135,000 $87,800
+Accumulated Depreciation ($45,520) ($45,893) ($46,907) ($46,480) ($46,933) ($33,520)
+Total Fixed Assets $68,280 $73,507 $87,693 $81,720 $88,067 $54,280
+Total Assets $116,950 $104,265 $114,542 $104,783 $116,330 $93,345
+Accounts Payable $8,181 $5,327 $5,631 $6,404 $6,195 $6,469
+Current Debt $0 $0 $0 $0 $0 $11,359
+Total Current Liabilities $8,181 $5,327 $5,631 $6,404 $6,195 $17,828
+Long Term Debt $53,700 $41,700 $48,700 $41,700 $41,700 $26,750
+Total Liabilities $61,881 $47,027 $54,331 $48,104 $47,895 $44,577
+Common Stock $18,360 $20,360 $32,060 $19,360 $32,060 $18,360
+Retained Earnings $36,709 $36,878 $28,152 $37,320 $36,375 $30,408
+Total Equity $55,068 $57,238 $60,211 $56,680 $68,435 $48,768
+Total Liabilities & Owners Equity $116,950 $104,265 $114,542 $104,783 $116,330 $93,345
+Income Statement Survey Andrews Baldwin Chester Digby Erie Ferris
+Sales $131,394 $108,744 $99,964 $124,912 $116,051 $123,458
+Variable Costs(Labor,Material,Carry) $94,113 $73,223 $70,329 $85,812 $78,413 $82,395
+Contribution Margin $37,281 $35,521 $29,635 $39,100 $37,638 $41,063
+Depreciation $7,587 $7,960 $8,973 $8,547 $9,000 $5,853
+SGA(R&D,Promo,Sales,Admin) $11,129 $10,586 $15,615 $11,342 $11,868 $16,042
+Other(Fees,Writeoffs,TQM,Bonuses) $600 $100 $1,035 $50 $685 $1,002
+EBIT $17,964 $16,874 $4,011 $19,161 $16,085 $18,165
+Interest(Short term,Long term) $6,777 $5,421 $6,212 $5,421 $5,421 $4,781
+Taxes $3,916 $4,009 ($770) $4,809 $3,733 $4,684
+Profit Sharing $145 $149 $0 $179 $139 $174
+Net Profit $7,126 $7,296 ($1,431) $8,752 $6,793 $8,525
+CAPSTONE ® COURIER Page 3
+Production Analysis C165051 Round: 1
+Dec. 31, 2027
+Name
+Primary
+Segment
+Units
+Sold
+Unit
+Inven
+tory
+Revision
+Date
+Age
+Dec.31 MTBF
+Pfmn
+Coord
+Size
+Coord Price
+Material
+Cost
+Labor
+Cost
+Contr.
+Marg.
+2nd
+Shift
+&
+Over-
+time
+Auto
+mation
+Next
+Round
+Capacity
+Next
+Round
+Plant
+Utiliz.
+Able Trad 1,808 162 4/13/2027 2.4 17500 6.0 14.6 $26.00 $10.86 $7.86 26% 0% 4.0 1,800 99%
+Acre Low 1,839 0 5/25/2022 5.6 14000 3.0 17.0 $21.00 $7.05 $7.47 29% 30% 5.0 1,400 129%
+Adam High 612 121 7/28/2027 1.6 23000 8.7 11.1 $38.00 $15.66 $8.98 34% 0% 3.0 900 77%
+Aft Pfmn 364 148 6/29/2024 3.5 25000 9.4 15.5 $33.00 $14.81 $8.98 23% 0% 3.0 600 73%
+Agape Size 318 120 5/24/2024 3.6 19000 4.0 11.0 $33.00 $12.60 $8.98 30% 0% 3.0 600 63%
+Baker Trad 1,278 0 5/16/2027 2.4 17500 5.0 15.0 $28.00 $10.14 $7.85 33% 0% 4.0 1,800 61%
+Bead Low 1,623 0 5/25/2022 5.6 14000 3.0 17.0 $21.00 $7.05 $7.13 31% 14% 6.0 1,400 113%
+Bid High 436 0 8/26/2027 1.5 23000 8.9 11.1 $40.00 $15.76 $8.97 38% 0% 3.0 900 44%
+Bold Pfmn 350 0 6/29/2024 3.5 25000 9.4 15.5 $33.00 $14.81 $8.97 26% 0% 3.0 600 45%
+Buddy Size 299 11 5/24/2024 3.6 19000 4.0 11.0 $33.00 $12.60 $8.97 33% 0% 3.0 600 41%
+Cake Trad 753 0 11/21/2023 4.1 17500 5.5 14.5 $28.00 $10.65 $7.85 32% 0% 4.0 1,800 31%
+Cedar Low 1,530 0 9/6/2027 3.0 14000 2.2 17.8 $21.00 $6.24 $6.96 33% 8% 7.0 1,400 107%
+Cid High 306 19 3/11/2028 2.7 23000 8.0 12.0 $38.00 $14.84 $8.98 36% 0% 3.0 900 32%
+Coat Pfmn 538 139 6/29/2024 3.5 25000 9.4 15.5 $33.00 $14.81 $9.01 24% 1% 5.0 600 100%
+Cure Size 579 173 12/11/2027 1.8 19000 5.0 9.6 $30.00 $13.82 $9.56 22% 16% 5.0 600 115%
+Daze Trad 1,982 0 3/23/2027 2.4 17000 5.7 14.3 $27.00 $10.70 $7.87 30% 1% 5.0 1,800 100%
+Dell Low 1,287 0 5/25/2022 5.6 14000 3.0 17.0 $19.99 $7.05 $6.73 29% 0% 5.0 1,400 89%
+Duck High 591 4 4/25/2027 1.7 24000 8.4 11.6 $39.50 $15.55 $8.97 37% 0% 5.0 900 62%
+Dot Pfmn 347 0 3/31/2027 2.1 25000 9.4 16.0 $33.00 $14.67 $8.97 27% 0% 3.0 600 45%
+Dune Size 315 32 5/24/2024 3.6 19000 4.0 11.0 $34.50 $12.60 $8.97 35% 0% 3.0 600 48%
+Eat Trad 1,670 252 4/22/2027 2.4 15000 5.7 14.3 $28.00 $10.10 $7.85 33% 0% 5.0 1,800 96%
+Ebb Low 1,376 0 1/15/2027 5.6 13000 3.0 17.0 $21.00 $6.75 $6.73 34% 0% 7.5 1,400 95%
+Echo High 397 0 11/10/2027 1.4 23000 9.1 11.0 $38.00 $15.91 $8.97 36% 0% 3.0 900 40%
+Edge Pfmn 414 0 8/4/2027 2.0 26000 10.4 15.3 $33.00 $15.83 $8.97 25% 0% 3.0 600 56%
+Egg Size 353 75 12/6/2027 1.8 18500 4.7 9.6 $33.00 $13.58 $8.97 31% 0% 3.0 600 61%
+Fast Trad 1,464 61 3/3/2027 2.5 17500 5.6 14.5 $29.50 $10.70 $8.26 34% 13% 4.0 1,200 111%
+Feat Low 1,623 0 1/15/2027 5.6 13000 3.0 17.0 $22.00 $6.75 $7.92 32% 60% 5.0 1,000 158%
+Fist High 421 65 12/22/2027 1.4 24000 9.1 10.9 $39.50 $16.26 $8.97 37% 0% 3.0 500 89%
+Foam Pfmn 424 50 11/10/2027 1.8 26000 10.6 14.8 $34.50 $16.11 $8.97 28% 0% 4.0 600 66%
+Fume Size 386 73 12/10/2027 1.8 19000 4.7 9.6 $34.50 $13.73 $8.97 35% 0% 4.0 600 66%
+CAPSTONE ® COURIER Page 4
+Traditional Segment Analysis C165051 Round: 1
+Dec. 31, 2027
+Traditional Statistics
+Total Industry Unit Demand 8,067
+Actual Industry Unit Sales |8,067
+Segment % of Total Industry |31.4%
+Next Year's Segment Growth Rate |9.2%
+Traditional Customer Buying Criteria
+Expectations Importance
+1. Age Ideal Age = 2.0 47%
+2. Price $19.50 - 29.50 23%
+3. Ideal Position Pfmn 5.7 Size 14.3 21%
+4. Reliability MTBF 14000-19000 9%
+Top Products in Traditional Segment
+Name
+Market
+Share
+Units
+Sold to
+Seg
+Revision
+Date
+Stock
+Out
+Pfmn
+Coord
+Size
+Coord
+List
+Price MTBF
+Age
+Dec.31
+Promo
+Budget
+Cust.
+Aware-
+ness
+Sales
+Budget
+Cust.
+Access-
+ibility
+Dec.
+Cust
+Survey
+Daze 22% 1,782 3/23/2027 YES 5.7 14.3 $27.00 17000 2.44 $1,500 73% $1,500 57% 42
+Able 20% 1,637 4/13/2027 6.0 14.6 $26.00 17500 2.41 $1,500 73% $1,000 50% 40
+Fast 18% 1,414 3/3/2027 5.6 14.5 $29.50 17500 2.46 $1,100 61% $1,175 54% 31
+Eat 16% 1,253 4/22/2027 5.7 14.3 $28.00 15000 2.39 $1,000 58% $1,000 50% 30
+Baker 13% 1,020 5/16/2027 YES 5.0 15.0 $28.00 17500 2.36 $1,000 58% $1,000 50% 30
+Cake 6% 508 11/21/2023 YES 5.5 14.5 $28.00 17500 4.10 $500 43% $500 45% 8
+Acre 1% 87 5/25/2022 YES 3.0 17.0 $21.00 14000 5.60 $900 53% $900 50% 1
+Bead 1% 78 5/25/2022 YES 3.0 17.0 $21.00 14000 5.60 $900 53% $900 50% 1
+Feat 1% 67 1/15/2027 YES 3.0 17.0 $22.00 13000 5.60 $1,100 59% $1,175 54% 0
+Dell 1% 63 5/25/2022 YES 3.0 17.0 $19.99 14000 5.60 $900 53% $900 57% 1
+Cedar 1% 63 9/6/2027 YES 2.2 17.8 $21.00 14000 2.95 $900 53% $900 45% 0
+Ebb 1% 58 1/15/2027 YES 3.0 17.0 $21.00 13000 5.60 $900 53% $900 50% 0
+CAPSTONE ® COURIER Page 5
+Low End Segment Analysis C165051 Round: 1
+Dec. 31, 2027
+Low End Statistics
+Total Industry Unit Demand 10,009
+Actual Industry Unit Sales |10,009
+Segment % of Total Industry |39.0%
+Next Year's Segment Growth Rate |11.7%
+Low End Customer Buying Criteria
+Expectations Importance
+1. Price $14.50 - 24.50 53%
+2. Age Ideal Age = 7.0 24%
+3. Ideal Position Pfmn 2.2 Size 17.8 16%
+4. Reliability MTBF 12000-17000 7%
+Top Products in Low End Segment
+Name
+Market
+Share
+Units
+Sold to
+Seg
+Revision
+Date
+Stock
+Out
+Pfmn
+Coord
+Size
+Coord
+List
+Price MTBF
+Age
+Dec.31
+Promo
+Budget
+Cust.
+Aware-
+ness
+Sales
+Budget
+Cust.
+Access-
+ibility
+Dec.
+Cust
+Survey
+Acre 18% 1,752 5/25/2022 YES 3.0 17.0 $21.00 14000 5.60 $900 53% $900 34% 15
+Feat 16% 1,556 1/15/2027 YES 3.0 17.0 $22.00 13000 5.60 $1,100 59% $1,175 37% 13
+Bead 15% 1,545 5/25/2022 YES 3.0 17.0 $21.00 14000 5.60 $900 53% $900 33% 15
+Cedar 15% 1,467 9/6/2027 YES 2.2 17.8 $21.00 14000 2.95 $900 53% $900 33% 12
+Ebb 13% 1,318 1/15/2027 YES 3.0 17.0 $21.00 13000 5.60 $900 53% $900 33% 15
+Dell 12% 1,224 5/25/2022 YES 3.0 17.0 $19.99 14000 5.60 $900 53% $900 34% 19
+Eat 4% 385 4/22/2027 5.7 14.3 $28.00 15000 2.39 $1,000 58% $1,000 33% 0
+Baker 2% 243 5/16/2027 YES 5.0 15.0 $28.00 17500 2.36 $1,000 58% $1,000 33% 1
+Cake 2% 225 11/21/2023 YES 5.5 14.5 $28.00 17500 4.10 $500 43% $500 33% 0
+Able 2% 154 4/13/2027 6.0 14.6 $26.00 17500 2.41 $1,500 73% $1,000 34% 0
+Daze 1% 138 3/23/2027 YES 5.7 14.3 $27.00 17000 2.44 $1,500 73% $1,500 34% 0
+CAPSTONE ® COURIER Page 6
+High End Segment Analysis C165051 Round: 1
+Dec. 31, 2027
+High End Statistics
+Total Industry Unit Demand 2,967
+Actual Industry Unit Sales |2,967
+Segment % of Total Industry |11.6%
+Next Year's Segment Growth Rate |16.2%
+High End Customer Buying Criteria
+Expectations Importance
+1. Ideal Position Pfmn 9.8 Size 10.2 43%
+2. Age Ideal Age = 0.0 29%
+3. Reliability MTBF 20000-25000 19%
+4. Price $29.50 - 39.50 9%
+Top Products in High End Segment
+Name
+Market
+Share
+Units
+Sold to
+Seg
+Revision
+Date
+Stock
+Out
+Pfmn
+Coord
+Size
+Coord
+List
+Price MTBF
+Age
+Dec.31
+Promo
+Budget
+Cust.
+Aware-
+ness
+Sales
+Budget
+Cust.
+Access-
+ibility
+Dec.
+Cust
+Survey
+Adam 21% 612 7/28/2027 8.7 11.1 $38.00 23000 1.56 $1,200 60% $800 40% 21
+Duck 20% 591 4/25/2027 8.4 11.6 $39.50 24000 1.69 $1,000 54% $1,000 44% 17
+Bid 15% 436 8/26/2027 YES 8.9 11.1 $40.00 23000 1.52 $800 48% $800 40% 18
+Fist 14% 421 12/22/2027 9.1 10.9 $39.50 24000 1.36 $1,000 54% $1,175 49% 29
+Echo 13% 397 11/10/2027 YES 9.1 11.0 $38.00 23000 1.42 $800 48% $800 41% 23
+Cid 10% 306 3/11/2028 8.0 12.0 $38.00 23000 2.70 $500 39% $500 39% 6
+Coat 1% 34 6/29/2024 9.4 15.5 $33.00 25000 3.50 $2,000 75% $2,000 39% 0
+Foam 1% 32 11/10/2027 10.6 14.8 $34.50 26000 1.81 $1,000 52% $1,175 49% 1
+Aft 1% 26 6/29/2024 9.4 15.5 $33.00 25000 3.50 $700 42% $700 40% 0
+Bold 1% 26 6/29/2024 YES 9.4 15.5 $33.00 25000 3.50 $700 42% $700 40% 0
+Edge 1% 22 8/4/2027 YES 10.4 15.3 $33.00 26000 1.95 $700 42% $700 41% 0
+Fast 1% 20 3/3/2027 5.6 14.5 $29.50 17500 2.46 $1,100 61% $1,175 49% 0
+CAPSTONE ® COURIER Page 7
+Performance Segment Analysis C165051 Round: 1
+Dec. 31, 2027
+Performance Statistics
+Total Industry Unit Demand 2,294
+Actual Industry Unit Sales |2,294
+Segment % of Total Industry |8.9%
+Next Year's Segment Growth Rate |19.8%
+Performance Customer Buying Criteria
+Expectations Importance
+1. Reliability MTBF 22000-27000 43%
+2. Ideal Position Pfmn 10.4 Size 15.3 29%
+3. Price $24.50 - 34.50 19%
+4. Age Ideal Age = 1.0 9%
+Top Products in Performance Segment
+Name
+Market
+Share
+Units
+Sold to
+Seg
+Revision
+Date
+Stock
+Out
+Pfmn
+Coord
+Size
+Coord
+List
+Price MTBF
+Age
+Dec.31
+Promo
+Budget
+Cust.
+Aware-
+ness
+Sales
+Budget
+Cust.
+Access-
+ibility
+Dec.
+Cust
+Survey
+Coat 22% 503 6/29/2024 9.4 15.5 $33.00 25000 3.50 $2,000 75% $2,000 47% 22
+Edge 17% 392 8/4/2027 YES 10.4 15.3 $33.00 26000 1.95 $700 42% $700 29% 25
+Foam 17% 392 11/10/2027 10.6 14.8 $34.50 26000 1.81 $1,000 52% $1,175 35% 26
+Dot 15% 339 3/31/2027 YES 9.4 16.0 $33.00 25000 2.13 $700 42% $700 29% 17
+Aft 15% 338 6/29/2024 9.4 15.5 $33.00 25000 3.50 $700 42% $700 29% 15
+Bold 14% 323 6/29/2024 YES 9.4 15.5 $33.00 25000 3.50 $700 42% $700 29% 15
+Able 0% 4 4/13/2027 6.0 14.6 $26.00 17500 2.41 $1,500 73% $1,000 29% 0
+Fast 0% 1 3/3/2027 5.6 14.5 $29.50 17500 2.46 $1,100 61% $1,175 35% 0
+CAPSTONE ® COURIER Page 8
+Size Segment Analysis C165051 Round: 1
+Dec. 31, 2027
+Size Statistics
+Total Industry Unit Demand 2,347
+Actual Industry Unit Sales |2,347
+Segment % of Total Industry |9.1%
+Next Year's Segment Growth Rate |18.3%
+Size Customer Buying Criteria
+Expectations Importance
+1. Ideal Position Pfmn 4.7 Size 9.6 43%
+2. Age Ideal Age = 1.5 29%
+3. Reliability MTBF 16000-21000 19%
+4. Price $24.50 - 34.50 9%
+Top Products in Size Segment
+Name
+Market
+Share
+Units
+Sold to
+Seg
+Revision
+Date
+Stock
+Out
+Pfmn
+Coord
+Size
+Coord
+List
+Price MTBF
+Age
+Dec.31
+Promo
+Budget
+Cust.
+Aware-
+ness
+Sales
+Budget
+Cust.
+Access-
+ibility
+Dec.
+Cust
+Survey
+Cure 24% 558 12/11/2027 5.0 9.6 $30.00 19000 1.82 $2,000 75% $2,000 51% 50
+Fume 16% 385 12/10/2027 4.7 9.6 $34.50 19000 1.82 $1,000 52% $1,175 42% 37
+Egg 15% 348 12/6/2027 4.7 9.6 $33.00 18500 1.83 $700 42% $700 35% 32
+Dune 13% 315 5/24/2024 4.0 11.0 $34.50 19000 3.60 $700 42% $700 36% 6
+Agape 13% 312 5/24/2024 4.0 11.0 $33.00 19000 3.60 $700 42% $700 35% 6
+Buddy 13% 293 5/24/2024 4.0 11.0 $33.00 19000 3.60 $700 42% $700 35% 6
+Daze 2% 49 3/23/2027 YES 5.7 14.3 $27.00 17000 2.44 $1,500 73% $1,500 36% 1
+Fast 1% 29 3/3/2027 5.6 14.5 $29.50 17500 2.46 $1,100 61% $1,175 42% 0
+Eat 1% 28 4/22/2027 5.7 14.3 $28.00 15000 2.39 $1,000 58% $1,000 35% 1
+Cake 1% 14 11/21/2023 YES 5.5 14.5 $28.00 17500 4.10 $500 43% $500 51% 0
+Baker 0% 11 5/16/2027 YES 5.0 15.0 $28.00 17500 2.36 $1,000 58% $1,000 35% 0
+Able 0% 5 4/13/2027 6.0 14.6 $26.00 17500 2.41 $1,500 73% $1,000 35% 0
+CAPSTONE ® COURIER Page 9
+Market Share C165051 Round: 1
+Dec. 31, 2027
+Actual Market Share in Units Potential Market Share in Units
+Trad Low High Pfmn Size Total Trad Low High Pfmn Size Total
+Industry Unit Sales 8,067 10,009 2,967 2,294 2,347 25,684 Units Demanded 8,067 10,009 2,967 2,294 2,347 25,684
+% of Market 31.4% 39.0% 11.6% 8.9% 9.1% 100.0% % of Market 31.4% 39.0% 11.6% 8.9% 9.1% 100.0%
+Able 20.3% 1.5% 0.2% 0.2% 0.2% 7.0% Able 19.2% 0.2% 0.2% 0.2% 6.1%
+Acre 1.1% 17.5% 7.2% Acre 1.2% 16.7% 6.9%
+Adam 20.6% 2.4% Adam 19.5% 2.3%
+Aft 0.0% 0.9% 14.7% 1.4% Aft 0.9% 14.1% 1.4%
+Agape 0.1% 0.0% 13.3% 1.2% Agape 0.1% 13.2% 1.2%
+Total 21.4% 19.1% 21.8% 14.9% 13.5% 19.2% Total 20.5% 16.7% 20.6% 14.3% 13.4% 17.8%
+Baker 12.6% 2.4% 0.1% 0.0% 0.4% 5.0% Baker 14.6% 0.3% 0.1% 0.5% 4.8%
+Bead 1.0% 15.4% 6.3% Bead 1.2% 16.6% 6.8%
+Bid 14.7% 1.7% Bid 14.9% 1.7%
+Bold 0.0% 0.9% 14.1% 1.4% Bold 0.9% 14.1% 1.4%
+Buddy 0.1% 0.0% 12.5% 1.2% Buddy 0.1% 13.2% 1.2%
+Total 13.7% 17.9% 15.7% 14.1% 13.0% 15.5% Total 15.9% 16.9% 16.0% 14.2% 13.7% 15.9%
+Cake 6.3% 2.3% 0.2% 0.0% 0.6% 2.9% Cake 6.1% 0.1% 0.2% 0.6% 2.1%
+Cedar 0.8% 14.7% 6.0% Cedar 1.0% 15.6% 6.4%
+Cid 10.3% 1.2% Cid 10.2% 1.2%
+Coat 0.0% 1.1% 21.9% 2.1% Coat 1.1% 21.1% 2.0%
+Cure 0.2% 0.1% 23.8% 2.3% Cure 0.2% 23.6% 2.2%
+Total 7.3% 16.9% 11.7% 22.0% 24.4% 14.4% Total 7.3% 15.7% 11.5% 21.1% 24.2% 13.9%
+Daze 22.1% 1.4% 0.4% 0.0% 2.1% 7.7% Daze 21.6% 0.4% 2.1% 7.0%
+Dell 0.8% 12.2% 5.0% Dell 1.5% 20.9% 8.6%
+Duck 19.9% 2.3% Duck 21.4% 2.5%
+Dot 0.3% 14.8% 1.4% Dot 0.3% 16.6% 1.5%
+Dune 0.0% 13.4% 1.2% Dune 13.3% 1.2%
+Total 22.9% 13.6% 20.6% 14.8% 15.5% 17.6% Total 23.1% 20.9% 22.1% 16.6% 15.4% 20.8%
+Eat 15.5% 3.9% 0.1% 0.0% 1.2% 6.5% Eat 14.7% 0.1% 1.2% 4.7%
+Ebb 0.7% 13.2% 5.4% Ebb 0.9% 15.8% 6.4%
+Echo 13.4% 1.5% Echo 13.7% 1.6%
+Edge 0.8% 17.1% 1.6% Edge 0.7% 17.5% 1.6%
+Egg 0.1% 0.0% 14.8% 1.4% Egg 0.1% 14.7% 1.4%
+Total 16.3% 17.0% 14.2% 17.1% 16.0% 16.4% Total 15.7% 15.8% 14.6% 17.5% 15.9% 15.8%
+Fast 17.5% 0.7% 0.1% 1.3% 5.7% Fast 16.6% 0.6% 0.1% 1.2% 5.4%
+Feat 0.8% 15.6% 6.3% Feat 0.9% 14.0% 5.7%
+Fist 14.2% 1.6% Fist 13.4% 1.6%
+Foam 1.1% 17.1% 1.7% Foam 1.1% 16.3% 1.6%
+Fume 0.0% 16.4% 1.5% Fume 16.3% 1.5%
+Total 18.4% 15.6% 16.0% 17.1% 17.6% 16.8% Total 17.5% 14.0% 15.2% 16.3% 17.5% 15.8%
+CAPSTONE ® COURIER Page 10
+Perceptual Map C165051 Round: 1
+Dec. 31, 2027
+Andrews Baldwin Chester
+Name Pfmn Size Revised Name Pfmn Size Revised Name Pfmn Size Revised
+Able 6.0 14.6 4/13/2027 Baker 5.0 15.0 5/16/2027 Cake 5.5 14.5 11/21/2023
+Acre 3.0 17.0 5/25/2022 Bead 3.0 17.0 5/25/2022 Cedar 2.2 17.8 9/6/2027
+Adam 8.7 11.1 7/28/2027 Bid 8.9 11.1 8/26/2027 Cid 8.0 12.0 3/11/2028
+Aft 9.4 15.5 6/29/2024 Bold 9.4 15.5 6/29/2024 Coat 9.4 15.5 6/29/2024
+Agape 4.0 11.0 5/24/2024 Buddy 4.0 11.0 5/24/2024 Cure 5.0 9.6 12/11/2027
+Digby Erie Ferris
+Name Pfmn Size Revised Name Pfmn Size Revised Name Pfmn Size Revised
+Daze 5.7 14.3 3/23/2027 Eat 5.7 14.3 4/22/2027 Fast 5.6 14.5 3/3/2027
+Dell 3.0 17.0 5/25/2022 Ebb 3.0 17.0 1/15/2027 Feat 3.0 17.0 1/15/2027
+Duck 8.4 11.6 4/25/2027 Echo 9.1 11.0 11/10/2027 Fist 9.1 10.9 12/22/2027
+Dot 9.4 16.0 3/31/2027 Edge 10.4 15.3 8/4/2027 Foam 10.6 14.8 11/10/2027
+Dune 4.0 11.0 5/24/2024 Egg 4.7 9.6 12/6/2027 Fume 4.7 9.6 12/10/2027
+CAPSTONE ® COURIER Page 11
+HR/TQM Report C165051 Round: 1
+Dec. 31, 2027
+HUMAN RESOURCES SUMMARY
+Andrews Baldwin Chester Digby Erie Ferris
+Needed Complement 858 594 619 702 695 698
+Complement 858 594 619 702 695 698
+1st Shift Complement 797 565 584 700 695 587
+2nd Shift Complement 61 29 35 2 0 111
+Overtime Percent 0.0% 0.0% 0.0% 0.0% 0.0% 0.1%
+Turnover Rate 10.0% 10.0% 10.0% 10.0% 10.0% 10.0%
+New Employees 244 59 62 72 69 70
+Separated Employees 0 106 81 0 5 2
+Recruiting Spend $0 $0 $0 $0 $0 $0
+Training Hours 0 0 0 0 0 0
+Productivity Index 100.0% 100.0% 100.0% 100.0% 100.0% 100.0%
+Recruiting Cost $244 $59 $62 $72 $69 $70
+Separation Cost $0 $530 $405 $0 $25 $10
+Training Cost $0 $0 $0 $0 $0 $0
+Total HR Admin Cost $244 $589 $467 $72 $94 $80
+Labor Contract Next Year
+Wages $22.05 $22.05 $22.05 $22.05 $22.05 $22.05
+Benefits 2,500 2,500 2,500 2,500 2,500 2,500
+Profit Sharing 2.0% 2.0% 2.0% 2.0% 2.0% 2.0%
+Annual Raise 5.0% 5.0% 5.0% 5.0% 5.0% 5.0%
+Starting Negotiation Position
+Wages
+Benefits
+Profit Sharing
+Annual Raise
+Ceiling Negotiation Position
+Wages
+Benefits
+Profit Sharing
+Annual Raise
+Adjusted Labor Demands
+Wages
+Benefits
+Profit Sharing
+Annual Raise
+Strike Days
+TQM SUMMARY
+Andrews Baldwin Chester Digby Erie Ferris
+Process Mgt Budgets Last Year
+CPI Systems $0 $0 $0 $0 $0 $0
+VendorJIT $0 $0 $0 $0 $0 $0
+Quality Initiative Training $0 $0 $0 $0 $0 $0
+Channel Support Systems $0 $0 $0 $0 $0 $0
+Concurrent Engineering $0 $0 $0 $0 $0 $0
+UNEP Green Programs $0 $0 $0 $0 $0 $0
+TQM Budgets Last Year
+Benchmarking $0 $0 $0 $0 $0 $0
+Quality Function Deployment Effort $0 $0 $0 $0 $0 $0
+CCE/6 Sigma Training $0 $0 $0 $0 $0 $0
+GEMI TQEM Sustainability Initiatives $0 $0 $0 $0 $0 $0
+Total Expenditures $0 $0 $0 $0 $0 $0
+Cumulative Impacts
+Material Cost Reduction 0.00% 0.00% 0.00% 0.00% 0.00% 0.00%
+Labor Cost Reduction 0.00% 0.00% 0.00% 0.00% 0.00% 0.00%
+Reduction R&D Cycle Time 0.00% 0.00% 0.00% 0.00% 0.00% 0.00%
+Reduction Admin Costs 0.00% 0.00% 0.00% 0.00% 0.00% 0.00%
+Demand Increase 0.00% 0.00% 0.00% 0.00% 0.00% 0.00%
+CAPSTONE ® COURIER Page 12
+Annual Report
+Annual Report Baldwin C165051 Round: 1
+Dec. 31, 2027
+Balance Sheet
+DEFINITIONS: Common
+Size: The common size column simply
+represents each item as a percentage of total assets for
+that year. Cash: Your end-of-year cash
+position. Accounts Receivable:
+Reflects the lag between delivery and payment of your
+products. Inventories: The current
+value of your inventory across all products. A zero
+indicates your company stocked out. Unmet demand
+would, of course, fall to your competitors. Plant
+& Equipment: The current value of your plant.
+Accum Deprec: The
+total accumulated depreciation from your plant.
+Accts Payable: What
+the company currently owes suppliers for materials and
+services. Current Debt: The debt the
+company is obligated to pay during the next year of
+operations. It includes emergency loans used to keep
+your company solvent should you run out of cash during
+the year. Long Term
+Debt: The companys long term debt is
+in the form of bonds, and this represents the total value of
+your bonds. Common Stock: The
+amount of capital invested by shareholders in the
+company. Retained
+Earnings: The profits that the company
+chose to keep instead of paying to shareholders as
+dividends.
+ASSETS 2027
+Common
+Size
+2026
+Cash $21,580 20.7% $3,434
+Account Receivable $8,938 8.6% $8,307
+Inventory $241 0.2% $8,617
+Total Current Assets $30,759 29.5% $20,358
+Plant & Equipment $119,400 115.0% $113,800
+Accumulated Depreciation ($45,893) -44.0% ($37,933)
+Total Fixed Assets $73,507 70.5% $75,867
+Total Assets $104,265 100.0% $96,225
+LIABILITIES & OWNERS
+EQUITY
+Accounts Payable $5,327 5.1% $6,583
+Current Debt $0 0.0% $0
+Long Term Debt $41,700 40.0% $41,700
+Total Liabilities $47,027 45.1% $48,283
+Common Stock $20,360 19.5% $18,360
+Retained Earnings $36,878 35.4% $29,582
+Total Equity $57,238 54.9% $47,942
+Total Liab. & O. Equity $104,265 100.0% $96,225
+Cash Flow Statement
+The Cash Flow Statement examines what happened in
+the Cash Account during the year. Cash injections appear as positive
+numbers and cash withdrawals as negative numbers. The Cash Flow
+Statement is an excellent tool for diagnosing emergency loans. When
+negative cash flows exceed positives, you are forced to seek emergency
+funding. For example, if sales are bad and you find yourself carrying an
+abundance of excess inventory, the report would show the increase in
+inventory as a huge negative cash flow. Too much unexpected inventory
+could outstrip your inflows, exhaust your starting cash and force you to beg
+for money to keep your company afloat.
+Cash Flows from Operating Activities 2027 2026
+Net Income(Loss) $7,296 $4,189
+Depreciation $7,960 $7,587
+Extraordinary gains/losses/writeoffs $0 $0
+Accounts Payable ($1,256) $3,583
+Inventory $8,376 ($8,617)
+Accounts Receivable ($630) ($307)
+Net cash from operation $21,746 $6,434
+Cash Flows from Investing Activities
+Plant Improvements ($5,600) $0
+Cash Flows from Financing Activities
+Dividends paid $0 ($4,000)
+Sales of common stock $2,000 $0
+Purchase of common stock $0 $0
+Cash from long term debt $0 $0
+Retirement of long term debt $0 $0
+Change in current debt(net) $0 $0
+Net cash from financing activities $2,000 ($4,000)
+Net change in cash position $18,146 $2,434
+Closing cash position $21,580 $3,434
+Annual Report Page 13
+Annual Report Baldwin C165051 Round: 1
+Dec. 31, 2027
+2027 Income Statement
+(Product Name) Baker Bead Bid Bold Buddy 2027
+Total
+Common
+Size
+Sales $35,787 $34,086 $17,456 $11,546 $9,869 $0 $0 $0 $108,744 100.0%
+Variable Costs:
+Direct Labor $9,968 $11,568 $3,899 $3,108 $2,659 $0 $0 $0 $31,201 28.7%
+Direct Material $13,858 $11,953 $6,848 $5,396 $3,939 $0 $0 $0 $41,993 38.6%
+Inventory Carry $0 $0 $0 $0 $29 $0 $0 $0 $29 0.0%
+Total Variable $23,825 $23,521 $10,747 $8,504 $6,627 $0 $0 $0 $73,223 67.3%
+Contribution Margin $11,962 $10,565 $6,709 $3,043 $3,242 $0 $0 $0 $35,521 32.7%
+Period Costs:
+Depreciation $2,640 $2,800 $1,080 $720 $720 $0 $0 $0 $7,960 7.3%
+SG&A: R&D $377 $0 $659 $0 $0 $0 $0 $0 $1,036 1.0%
+Promotions $1,000 $900 $800 $700 $700 $0 $0 $0 $4,100 3.8%
+Sales $1,000 $900 $800 $700 $700 $0 $0 $0 $4,100 3.8%
+Admin $444 $423 $217 $143 $123 $0 $0 $0 $1,351 1.2%
+Total Period $5,461 $5,023 $3,556 $2,263 $2,243 $0 $0 $0 $18,546 17.1%
+Net Margin $6,501 $5,542 $3,153 $779 $1,000 $0 $0 $0 $16,974 15.6%
+Definitions: Sales: Unit Sales times list price. Direct Labor: Labor
+costs incurred to produce the product that was sold. Inventory Carry Cost: the cost
+unsold goods in inventory. Depreciation: Calculated on straight-line. 15-year
+depreciation of plant value. R&D Costs: R&D department expenditures for each product.
+Admin: Administration overhead is estimated at 1.5% of sales. Promotions:
+The promotion budget for each product. Sales: The sales force budget for
+each product. Other: Chargs not included in other categories such as Fees, Write offs,
+and TQM. The fees include money paid to investment bankers and brokerage firms to issue new stocks or
+bonds plus consulting fees your instructor might assess. Write-offs include the loss you might experience
+when you sell capacity or liquidate inventory as the result of eliminating a production line. If the amount
+appears as a negative amount, then you actually made money on the liquidation of capacity or inventory.
+EBIT: Earnings Before Interest and Taxes. Short Term Interest:
+Interest expense based on last years current debt, including short term debt, long term notes that
+have become due, and emergency loans, Long Term Interest: Interest paid on
+outstanding bonds. Taxes: Income tax based upon a 35% tax rate. Profit
+Sharing: Profits shared with employees under the labor contract. Net Profit:
+EBIT minus interest, taxes, and profit sharing.
+Other $100 0.1%
+EBIT $16,874 15.5%
+Short Term Interest $0 0.0%
+Long Term Interest $5,421 5.0%
+Taxes $4,009 3.7%
+Profit Sharing $149 0.1%
+Net Profit $7,296 6.7%
+Annual Report Page 14
+

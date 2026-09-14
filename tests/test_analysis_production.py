@@ -15,7 +15,7 @@ from capsim_analyzer.models import (
 from capsim_analyzer.parser import parse_courier_pdf
 
 
-PDF_PATH = Path(__file__).parents[1] / "data" / "CourierC165051R0TBK0CA.PDF"
+PDF_PATH = Path(__file__).parents[1] / "data" / "Week_0.PDF"
 
 
 def _report(products=(), production=(), segment_reports=()):

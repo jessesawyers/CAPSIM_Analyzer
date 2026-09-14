@@ -6,7 +6,7 @@ from capsim_analyzer.enums import Company, Segment
 from capsim_analyzer.parser import parse_courier_pdf
 
 
-PDF_PATH = Path(__file__).parents[1] / "data" / "CourierC165051R0TBK0CA.PDF"
+PDF_PATH = Path(__file__).parents[1] / "data" / "Week_0.PDF"
 
 
 def test_parser_reads_courier_metadata():

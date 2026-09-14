@@ -23,7 +23,7 @@ from capsim_analyzer.parser import parse_courier_pdf
 from pathlib import Path
 
 
-PDF_PATH = Path(__file__).parents[1] / "data" / "CourierC165051R0TBK0CA.PDF"
+PDF_PATH = Path(__file__).parents[1] / "data" / "Week_0.PDF"
 
 
 def _context(*, share=Decimal("10"), awareness=Decimal("70"), accessibility=Decimal("60"), score=Decimal("30"), promotion=Decimal("100"), sales=Decimal("100"), peer=True, round_number=0):
